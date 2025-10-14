@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>🍜 Menu Select</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.3/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .tab-active { border-bottom: 2px solid #16a34a; color: #16a34a; }
+    .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #16a34a; color: white; padding: 10px 16px; border-radius: 8px; display: none; z-index: 50; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <div class="toast" id="toast">Đã thêm vào giỏ hàng</div>
+
+  <div class="max-w-xl mx-auto p-2">
+    <div class="flex justify-around text-lg font-semibold border-b mb-2">
+      <button id="tabMenu" class="py-2 flex-1 tab-active">🍜 Menu</button>
+      <button id="tabCart" class="py-2 flex-1">🛒 Giỏ hàng (<span id="cartCount">0</span>)</button>
+    </div>
+
+    <div id="menuTab">
+      <div class="flex gap-2 mb-2">
+        <input id="searchInput" type="text" placeholder="🔍 Tìm món (Anh / Việt)" class="flex-1 border rounded p-2">
+        <input id="indexInput" type="number" placeholder="Index" class="w-20 border rounded p-2">
+      </div>
+      <div id="menuList" class="space-y-2 overflow-y-auto"></div>
+    </div>
+
+    <div id="cartTab" class="hidden">
+      <div id="cartList" class="space-y-2"></div>
+      <div id="cartEmpty" class="text-center text-gray-500 py-6 hidden">Giỏ hàng trống 🍃</div>
+
+      <div class="border-t pt-3 mt-3">
+        <div class="flex justify-between font-semibold mb-2">
+          <span>Tổng cộng:</span> <span id="cartTotal">£0.00</span>
+        </div>
+        <div class="flex gap-2">
+          <button id="btnClear" class="flex-1 bg-red-500 text-white p-2 rounded">🗑️ Xóa hết</button>
+          <button id="btnDone" class="flex-1 bg-green-600 text-white p-2 rounded">✅ Hoàn tất đơn</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="menu.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
