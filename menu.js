@@ -150,46 +150,91 @@ const drinkItems = [
   { category: "Dessert", name: "Classic Vietnam Multi Colours Dessert", nameVN: "Chè thập cẩm", options: [{ label: "Regular", price: 4.50 }] },
   { category: "Dessert", name: "Vietnamese Style Fruit Salad", nameVN: "Hoa quả dầm", options: [{ label: "Regular", price: 4.50 }] },
 
+  // WHITE WINE
+{ category: "White Wine", name: "Molino Del Sol Airen (Spain)", nameVN: "", options: [{ label: "175ml", price: 3.50 }, { label: "250ml", price: 5.00 }, { label: "BTL", price: 15.00 }] },
+{ category: "White Wine", name: "Umbala Sauvignon Blanc (South Africa)", nameVN: "", options: [{ label: "BTL", price: 16.00 }] },
+{ category: "White Wine", name: "Farfalla Pinot Grigio (Italy)", nameVN: "", options: [{ label: "175ml", price: 4.00 }, { label: "250ml", price: 5.75 }, { label: "BTL", price: 17.00 }] },
+{ category: "White Wine", name: "Central Monte Chardonnay (Chile)", nameVN: "", options: [{ label: "BTL", price: 17.00 }] },
 
-  //TODO
+// ROSÉ WINE
+{ category: "Rosé Wine", name: "Farfalla Pinot Grigio Blush (Italy)", nameVN: "", options: [{ label: "175ml", price: 4.00 }, { label: "250ml", price: 5.75 }, { label: "BTL", price: 17.00 }] },
+{ category: "Rosé Wine", name: "Monterey Bay Zinfandel Rose (USA)", nameVN: "", options: [{ label: "BTL", price: 19.00 }] },
 
-  // BEER & CIDER
-  { category: "Beer & Cider", name: "Hanoi Beer", nameVN: "Bia Hà Nội", options: [{ label: "330ml", price: 4.50 }] },
-  { category: "Beer & Cider", name: "Saigon Beer", nameVN: "Bia Sài Gòn", options: [{ label: "330ml", price: 4.50 }] },
-  { category: "Beer & Cider", name: "Asahi", nameVN: "Asahi", options: [{ label: "330ml", price: 4.00 }] },
-  { category: "Beer & Cider", name: "Corona Extra", nameVN: "Corona", options: [{ label: "330ml", price: 4.00 }] },
-  { category: "Beer & Cider", name: "Stella Artois", nameVN: "Stella", options: [{ label: "275ml", price: 4.00 }] },
-  { category: "Beer & Cider", name: "Heineken 0.0% Alc Free", nameVN: "Heineken 0.0%", options: [{ label: "330ml", price: 3.50 }] },
-  { category: "Beer & Cider", name: "Kopparberg Mixed Fruit", nameVN: "Kopparberg mixed fruit", options: [{ label: "500ml", price: 5.50 }] },
-  { category: "Beer & Cider", name: "Kopparberg Strawberry & Lime", nameVN: "Kopparberg dâu & chanh", options: [{ label: "500ml", price: 5.50 }] },
+// RED WINE
+{ category: "Red Wine", name: "Molino Del Sol Tempranillo (Spain)", nameVN: "", options: [{ label: "175ml", price: 3.50 }, { label: "250ml", price: 5.00 }, { label: "BTL", price: 15.00 }] },
+{ category: "Red Wine", name: "Umbala Shiraz (South Africa)", nameVN: "", options: [{ label: "BTL", price: 16.00 }] },
+{ category: "Red Wine", name: "Central Monte Merlot (Chile)", nameVN: "", options: [{ label: "BTL", price: 17.00 }] },
+{ category: "Red Wine", name: "Equino Malbec (Argentina)", nameVN: "", options: [{ label: "BTL", price: 19.00 }] },
 
-  // COCKTAILS
-  { category: "Cocktails", name: "Pornstar Martini", nameVN: "Pornstar Martini", options: [{ label: "Regular", price: 7.50 }] },
-  { category: "Cocktails", name: "Espresso Martini", nameVN: "Espresso Martini", options: [{ label: "Regular", price: 7.50 }] },
-  { category: "Cocktails", name: "Strawberry Daiquiri", nameVN: "Dâu Daiquiri", options: [{ label: "Regular", price: 7.50 }] },
-  { category: "Cocktails", name: "Pina Colada", nameVN: "Pina Colada", options: [{ label: "Regular", price: 7.50 }] },
+// SPARKLING WINE
+{ category: "Sparkling Wine", name: "Prosecco, Famiglia Botter D.O.C Extra Dry (Italy)", nameVN: null, options: [{ label: "BTL", price: 21.00 }] },
+{ category: "Sparkling Wine", name: "Prosecco Rosé, Famiglia Botter D.O.C Extra Dry (Italy)", nameVN: null, options: [{ label: "BTL", price: 22.00 }] },
 
-  // SOFT DRINKS
-  { category: "Soft Drink", name: "Coca Cola", nameVN: "Coca", options: [{ label: "330ml", price: 2.90 }] },
-  { category: "Soft Drink", name: "Diet Coke", nameVN: "Diet Coke", options: [{ label: "330ml", price: 2.70 }] },
-  { category: "Soft Drink", name: "Apple Juice", nameVN: "Nước táo", options: [{ label: "Glass", price: 2.50 }] },
-  { category: "Soft Drink", name: "Orange Juice", nameVN: "Nước cam", options: [{ label: "Glass", price: 2.50 }] },
-  { category: "Soft Drink", name: "Still Water", nameVN: "Nước suối", options: [{ label: "330ml", price: 1.95 }, { label: "750ml", price: 3.75 }] },
+// BEER & CIDER
+{ category: "Beer & Cider", name: "Hanoi Beer", nameVN: null, options: [{ label: "330ml", price: 4.50 }] },
+{ category: "Beer & Cider", name: "Saigon Beer", nameVN: null, options: [{ label: "330ml", price: 4.50 }] },
+{ category: "Beer & Cider", name: "Asahi", nameVN: null, options: [{ label: "330ml", price: 4.00 }] },
+{ category: "Beer & Cider", name: "Corona Extra", nameVN: null, options: [{ label: "330ml", price: 4.00 }] },
+{ category: "Beer & Cider", name: "Stella Artois", nameVN: null, options: [{ label: "275ml", price: 4.00 }] },
+{ category: "Beer & Cider", name: "Heineken 0.0% Alc Free", nameVN: null, options: [{ label: "330ml", price: 3.50 }] },
+{ category: "Beer & Cider", name: "Kopparberg Mixed Fruit", nameVN: null, options: [{ label: "500ml", price: 5.50 }] },
+{ category: "Beer & Cider", name: "Kopparberg Strawberry & Lime", nameVN: null, options: [{ label: "500ml", price: 5.50 }] },
 
-  // WINE (ví dụ)
-  { category: "White Wine", name: "Molino Del Sol Airen (Spain)", nameVN: "Vang trắng Airen", options: [{ label: "175ml", price: 3.50 }, { label: "250ml", price: 5.00 }, { label: "BTL", price: 15.00 }] },
-  { category: "Red Wine", name: "Central Monte Merlot (Chile)", nameVN: "Vang đỏ Merlot", options: [{ label: "BTL", price: 17.00 }] },
+// COCKTAILS
+{ category: "Cocktails", name: "Pornstar Martini", nameVN: null, options: [{ label: "Regular", price: 7.50 }] },
+{ category: "Cocktails", name: "Espresso Martini", nameVN: null, options: [{ label: "Regular", price: 7.50 }] },
+{ category: "Cocktails", name: "Strawberry Daiquiri", nameVN: null, options: [{ label: "Regular", price: 7.50 }] },
+{ category: "Cocktails", name: "Pina Colada", nameVN: null, options: [{ label: "Regular", price: 7.50 }] },
 
-  // SPIRITS
-  { category: "Vodka & Gin", name: "Absolut Vodka", nameVN: "Absolut", options: [{ label: "25ml", price: 3.50 }] },
-  { category: "Whiskey", name: "Jack Daniel’s Whiskey", nameVN: "Jack Daniel’s", options: [{ label: "25ml", price: 3.50 }] },
-  
+// MINERALS / SOFT DRINK
+{ category: "Soft Drink", name: "Coca Cola", nameVN: null, options: [{ label: "330ml", price: 2.90 }] },
+{ category: "Soft Drink", name: "Diet Coke", nameVN: null, options: [{ label: "330ml", price: 2.70 }] },
+{ category: "Soft Drink", name: "Marlish Brazilian Orange", nameVN: null, options: [{ label: "330ml Can", price: 2.50 }] },
+{ category: "Soft Drink", name: "Marlish Sicilian Lemon", nameVN: null, options: [{ label: "330ml Can", price: 2.50 }] },
+{ category: "Soft Drink", name: "Tomato Juice", nameVN: null, options: [{ label: "Regular", price: 2.50 }] },
+{ category: "Soft Drink", name: "Apple Juice", nameVN: null, options: [{ label: "Regular", price: 2.50 }] },
+{ category: "Soft Drink", name: "Orange Juice", nameVN: null, options: [{ label: "Regular", price: 2.50 }] },
+{ category: "Soft Drink", name: "Marlish Sparkling Water", nameVN: null, options: [{ label: "330ml", price: 1.95 }, { label: "750ml", price: 3.75 }] },
+{ category: "Soft Drink", name: "Marlish Still Water", nameVN: null, options: [{ label: "330ml", price: 1.95 }, { label: "750ml", price: 3.75 }] },
+{ category: "Soft Drink", name: "Marlish Soda Water", nameVN: null, options: [{ label: "200ml", price: 2.50 }] },
+{ category: "Soft Drink", name: "Marlish English Tonic", nameVN: null, options: [{ label: "200ml", price: 2.50 }] },
+{ category: "Soft Drink", name: "Marlish Premium Lemonade", nameVN: null, options: [{ label: "200ml", price: 2.50 }] },
+{ category: "Soft Drink", name: "Marlish Raspberry Tonic", nameVN: null, options: [{ label: "200ml", price: 2.50 }] },
+{ category: "Soft Drink", name: "Marlish Distiller's Choice Tonic", nameVN: null, options: [{ label: "200ml", price: 2.50 }] },
+{ category: "Soft Drink", name: "Marlish Elderflower Tonic", nameVN: null, options: [{ label: "200ml", price: 2.50 }] },
+{ category: "Soft Drink", name: "Marlish Rhubarb Ginger Ale", nameVN: null, options: [{ label: "200ml", price: 2.50 }] },
+{ category: "Soft Drink", name: "Marlish Dandelion & Burdock Tonic", nameVN: null, options: [{ label: "200ml", price: 2.50 }] },
 
 
+// VODKA & GIN
+{ category: "Vodka & Gin", name: "Absolut Vodka", nameVN: null, options: [{ label: "25ml", price: 3.50 }] },
+{ category: "Vodka & Gin", name: "Smirnoff Vodka", nameVN: null, options: [{ label: "25ml", price: 3.40 }] },
+{ category: "Vodka & Gin", name: "Bombay Sapphire Gin", nameVN: null, options: [{ label: "25ml", price: 3.50 }] },
+{ category: "Vodka & Gin", name: "Gordon's Gin", nameVN: null, options: [{ label: "25ml", price: 3.50 }] },
+{ category: "Vodka & Gin", name: "Gordon's Pink Gin", nameVN: null, options: [{ label: "25ml", price: 3.50 }] },
+{ category: "Vodka & Gin", name: "Agnes Arber Rhubarb Gin", nameVN: null, options: [{ label: "25ml", price: 4.95 }] },
+{ category: "Vodka & Gin", name: "Agnes Arber Pineapple Gin", nameVN: null, options: [{ label: "25ml", price: 4.95 }] },
 
-  // JUICE
-  { category: "Juice", name: "Fresh Lemon Juice", nameVN: "Nước chanh tươi", options: [{ label: "Regular", price: 2.95 }] },
-  { category: "Juice", name: "Coconut Juice", nameVN: "Nước dừa", options: [{ label: "Regular", price: 2.95 }] },
+// RUM & TEQUILA
+{ category: "Rum & Tequila", name: "Captain Morgan Dark Rum", nameVN: null, options: [{ label: "25ml", price: 3.40 }] },
+{ category: "Rum & Tequila", name: "Malibu", nameVN: null, options: [{ label: "25ml", price: 3.40 }] },
+{ category: "Rum & Tequila", name: "Bacardi Carta Blanca", nameVN: null, options: [{ label: "25ml", price: 3.40 }] },
+{ category: "Rum & Tequila", name: "Old J Spiced Rum", nameVN: null, options: [{ label: "25ml", price: 3.60 }] },
+{ category: "Rum & Tequila", name: "Jose Cuervo Gold Tequila", nameVN: null, options: [{ label: "25ml", price: 3.60 }] },
+
+// WHISKEY
+{ category: "Whiskey", name: "Jack Daniels Whiskey", nameVN: null, options: [{ label: "25ml", price: 3.50 }] },
+{ category: "Whiskey", name: "Johnnie Walker Black Label", nameVN: null, options: [{ label: "25ml", price: 4.95 }] },
+
+// APERITIFS & LIQUIERS
+{ category: "Aperitifs & Liquiers", name: "Baileys", nameVN: null, options: [{ label: "50ml", price: 3.50 }] },
+{ category: "Aperitifs & Liquiers", name: "Cointreau", nameVN: null, options: [{ label: "25ml", price: 3.50 }] },
+{ category: "Aperitifs & Liquiers", name: "Jagermeister", nameVN: null, options: [{ label: "25ml", price: 3.50 }] },
+{ category: "Aperitifs & Liquiers", name: "Disaronno Amaretto", nameVN: null, options: [{ label: "25ml", price: 3.50 }] },
+
+// JUICE
+{ category: "Juice", name: "Fresh Lemon Juice", nameVN: "Nước chanh tươi / 柠檬汁", options: [{ label: "Regular", price: 2.95 }] },
+{ category: "Juice", name: "Coconut Juice", nameVN: "Nước dừa / 椰子汁", options: [{ label: "Regular", price: 2.95 }] },
 
 ];
  
