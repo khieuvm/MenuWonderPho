@@ -128,13 +128,13 @@ const drinkItems = [
         category: "Vietnamese Coffee",
         name: "Rich Vietnamese Hot Coffee",
         nameVN: "Cà phê nóng",
-        options: [{ label: "Black", price: 3.50 }, { label: "With condensed milk", price: 3.50 }]
+        options: [{ label: "Black", price: 3.50 }, { label: "With milk", price: 3.50 }]
     },
     {
         category: "Vietnamese Coffee",
         name: "Vietnamese Iced Coffee",
         nameVN: "Cà phê đá",
-        options: [{ label: "Black", price: 3.50 }, { label: "With condensed milk", price: 3.50 }]
+        options: [{ label: "Black", price: 3.50 }, { label: "With milk", price: 3.50 }]
     },
 
     // TEA
