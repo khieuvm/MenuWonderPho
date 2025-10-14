@@ -336,7 +336,7 @@ function renderCart() {
         border-radius:8px;
         padding:10px 12px;
         box-shadow:0 1px 4px rgba(0,0,0,0.1);
-        margin:6px 0;
+        margin:6px;
         border-left:4px solid ${isDrink ? "#3b82f6" : "#10b981"};
       `;
 
@@ -344,7 +344,7 @@ function renderCart() {
         ? `
             <div>
               <strong>${item.name}</strong>
-              <div style="font-style:italic;color:#2563eb;margin-left:18px;">
+              <div style="font-style:italic;color:#2563eb;margin-left:15px;margin-right:15px;">
                 ${item.category ? `${item.category}` : ""}${item.nameVN ? ` - ${item.nameVN}` : ""}
                 ${item.sizeLabel ? ` (${item.sizeLabel})` : ""}
               </div>
@@ -353,7 +353,7 @@ function renderCart() {
         : `
             <div>
             <strong>${item.index ? `${item.index}. ` : ""}${item.name}</strong>
-            <div style="font-style:italic;color:#4b5563;margin-left:18px;">
+            <div style="font-style:italic;color:#4b5563;margin-left:15px;margin-right:15px;">
               ${item.nameVN || ""}
             </div>
           </div>
