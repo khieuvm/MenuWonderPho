@@ -146,14 +146,14 @@ function renderDrinks(items) {
         // Logic hiển thị tuỳ theo số lượng option
         if (options.length === 1 && options[0].label.toLowerCase() === "regular") {
             // ✅ Chỉ 1 option Regular → không hiển thị gì thêm
-            btn.onclick = () => addToCart({...item, sizeLabel: null, price: options[0].price });
+            btn.onclick = () => addToCart({ ...item, sizeLabel: null, price: options[0].price });
         } else if (options.length === 1) {
             // ✅ Chỉ 1 option (nhưng không phải Regular) → hiển thị text label
             const label = document.createElement("div");
             label.textContent = options[0].label;
             label.style.cssText = "color:#374151;font-weight:400;";
             right.appendChild(label);
-            btn.onclick = () => addToCart({...item, sizeLabel: options[0].label, price: options[0].price });
+            btn.onclick = () => addToCart({ ...item, sizeLabel: options[0].label, price: options[0].price });
         } else {
             // ✅ Nhiều options → hiển thị dropdown (chỉ label, không giá)
             const sel = document.createElement("select");
@@ -168,7 +168,7 @@ function renderDrinks(items) {
 
             btn.onclick = () => {
                 const choice = nonRegular[sel.value] || options[0];
-                addToCart({...item, sizeLabel: choice.label, price: choice.price });
+                addToCart({ ...item, sizeLabel: choice.label, price: choice.price });
             };
         }
 
@@ -182,29 +182,29 @@ function renderDrinks(items) {
 
 /* ---------- CART ---------- */
 function addToCart(item) {
-  // Tạo đối tượng cart item chuẩn hoá
-  const newItem = {
-    name: item.name || null,
-    nameVN: item.nameVN || null,
-    category: item.category || null,
-    index: item.index ?? null,
-    price: item.price ?? 0,
-    sizeLabel: item.sizeLabel || null,
-    qty: 1
-  };
+    // Tạo đối tượng cart item chuẩn hoá
+    const newItem = {
+        name: item.name || null,
+        nameVN: item.nameVN || null,
+        category: item.category || null,
+        index: item.index ?? null,
+        price: item.price ?? 0,
+        sizeLabel: item.sizeLabel || null,
+        qty: 1
+    };
 
-  // Tìm xem trong cart đã có item tương tự chưa
-  const existing = cartItems.find(c =>
-    c.name === newItem.name &&
-    c.sizeLabel === newItem.sizeLabel &&
-    c.category === newItem.category
-  );
+    // Tìm xem trong cart đã có item tương tự chưa
+    const existing = cartItems.find(c =>
+        c.name === newItem.name &&
+        c.sizeLabel === newItem.sizeLabel &&
+        c.category === newItem.category
+    );
 
-  if (existing) {
-    existing.qty += 1;
-  } else {
-    cartItems.push(newItem);
-  }
+    if (existing) {
+        existing.qty += 1;
+    } else {
+        cartItems.push(newItem);
+    }
     saveCart();
     showToast();
 }
@@ -222,113 +222,43 @@ btnDone.onclick = () => {
 };
 
 function renderCart() {
-  cartList.innerHTML = "";
+    cartList.innerHTML = "";
 
-  if (cartItems.length === 0) {
-    cartCount.textContent = 0;
-    btnDone.style.display = "none";
-    cartList.innerHTML = `<div style="text-align:center; color:#6b7280; padding:20px;">Your cart is empty 🛒</div>`;
-    return;
-  }
-
-  btnDone.style.display = "block";
-    let qty = 0;
-
-  cartItems.forEach(item => {
-    qty += item.qty;
-    const div = document.createElement("div");
-    div.className = "cart-item";
-    div.style.cssText = `
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      background:#fff;
-      border-radius:8px;
-      padding:10px 12px;
-      box-shadow:0 1px 4px rgba(0,0,0,0.1);
-      margin:6px 0;
-    `;
-
-    const isDrink = !!item.category; // có category tức là drink
-
-    console.log("isDrink:", isDrink, item);
-    // phần nội dung hiển thị
-    const infoHTML = isDrink
-      ? `
-          <div>
-            <strong>${item.name}</strong>
-            <div style="font-style:italic;color:#2563eb;margin-left:18px;">
-              ${item.category ? `${item.category}` : ""}
-              ${item.nameVN ? ` - ${item.nameVN}` : ""}
-              ${item.sizeLabel ? ` (${item.sizeLabel})` : ""}
-            </div>
-          </div>
-        `
-      : `
-          <div>
-            <strong>${item.index ? `${item.index}. ` : ""}${item.name}</strong>
-            <div style="font-style:italic;color:#4b5563;margin-left:18px;">
-              ${item.nameVN || ""}
-            </div>
-          </div>
-        `;
-
-    // phần số lượng bên phải
-    const qtyHTML = `
-      <div style="font-weight:600; font-size:1rem; color:#111827;">x${item.qty}</div>
-    `;
-
-    div.innerHTML = `${infoHTML}${qtyHTML}`;
-
-    // highlight nhẹ nếu là drink
-    if (isDrink) {
-        div.style.borderLeft = "5px solid #3b82f6";
-        div.style.background = "#eff6ff";
+    if (cartItems.length === 0) {
+        cartCount.textContent = 0;
+        btnDone.style.display = "none";
+        cartList.innerHTML = `<div style="text-align:center; color:#6b7280; padding:20px;">Your cart is empty 🛒</div>`;
+        return;
     }
 
-    cartList.appendChild(div);
-  });
-  cartCount.textContent = qty;
-}
+    btnDone.style.display = "block";
 
-function renderCart() {
-  cartList.innerHTML = "";
+    const foodItems = cartItems.filter(i => !i.category);
+    const drinkItems = cartItems.filter(i => i.category);
 
-  if (cartItems.length === 0) {
-    cartCount.textContent = 0;
-    btnDone.style.display = "none";
-    cartList.innerHTML = `<div style="text-align:center; color:#6b7280; padding:20px;">Your cart is empty 🛒</div>`;
-    return;
-  }
+    // ✅ Helper: group drinks by category
+    const groupByCategory = (arr) => {
+        const groups = {};
+        arr.forEach(i => {
+            const cat = i.category || "Other Drinks";
+            if (!groups[cat]) groups[cat] = [];
+            groups[cat].push(i);
+        });
+        return groups;
+    };
+    const drinkGroups = groupByCategory(drinkItems);
 
-  btnDone.style.display = "block";
+    // ✅ Helper: render section (food / drink group)
+    const renderSection = (title, items, isDrink = false) => {
+        if (items.length === 0) return;
 
-  const foodItems = cartItems.filter(i => !i.category);
-  const drinkItems = cartItems.filter(i => i.category);
+        const section = document.createElement("div");
+        section.innerHTML = `<h3 style="margin:10px 0; font-weight:600; color:${isDrink ? "#2563eb" : "#10b981"};">${title}</h3>`;
 
-  // ✅ Helper: group drinks by category
-  const groupByCategory = (arr) => {
-    const groups = {};
-    arr.forEach(i => {
-      const cat = i.category || "Other Drinks";
-      if (!groups[cat]) groups[cat] = [];
-      groups[cat].push(i);
-    });
-    return groups;
-  };
-  const drinkGroups = groupByCategory(drinkItems);
-
-  // ✅ Helper: render section (food / drink group)
-  const renderSection = (title, items, isDrink = false) => {
-    if (items.length === 0) return;
-
-    const section = document.createElement("div");
-    section.innerHTML = `<h3 style="margin:10px 0; font-weight:600; color:${isDrink ? "#2563eb" : "#10b981"};">${title}</h3>`;
-
-    items.forEach(item => {
-      const div = document.createElement("div");
-      div.className = "cart-item";
-      div.style.cssText = `
+        items.forEach(item => {
+            const div = document.createElement("div");
+            div.className = "cart-item";
+            div.style.cssText = `
         display:flex;
         justify-content:space-between;
         align-items:center;
@@ -340,98 +270,104 @@ function renderCart() {
         border-left:4px solid ${isDrink ? "#3b82f6" : "#10b981"};
       `;
 
-      const infoHTML = isDrink
-        ? `
+            const infoHTML = isDrink
+                ? `
             <div>
               <strong>${item.name}</strong>
-              <div style="font-style:italic;color:#2563eb;margin-left:15px;margin-right:15px;">
+              <div style="font-style:italic;color:#2563eb;margin-left:15px;">
                 ${item.category ? `${item.category}` : ""}${item.nameVN ? ` - ${item.nameVN}` : ""}
                 ${item.sizeLabel ? ` (${item.sizeLabel})` : ""}
               </div>
             </div>
           `
-        : `
+                : `
             <div>
             <strong>${item.index ? `${item.index}. ` : ""}${item.name}</strong>
-            <div style="font-style:italic;color:#4b5563;margin-left:15px;margin-right:15px;">
+            <div style="font-style:italic;color:#4b5563;margin-left:15px;">
               ${item.nameVN || ""}
             </div>
           </div>
           `;
 
-      const qtyHTML = `
+            const qtyHTML = `
         <div style="font-weight:500; font-size:1rem; color:#111827;">x${item.qty}</div>
       `;
 
-      div.innerHTML = `${infoHTML}${qtyHTML}`;
-      section.appendChild(div);
-    });
+            div.innerHTML = `
+        <div style="display:flex; align-items:center; gap:20px;">
+          ${infoHTML}
+          ${qtyHTML}
+        </div>
+      `;
 
-    cartList.appendChild(section);
-  };
+            section.appendChild(div);
+        });
 
-  // --- Render Food ---
-  renderSection("🍱 Food Items", foodItems, false);
+        cartList.appendChild(section);
+    };
 
-  // --- Render Drinks grouped by category ---
-  if (drinkItems.length > 0) {
-    const drinksHeader = document.createElement("h3");
-    drinksHeader.textContent = "🍸 Drinks";
-    drinksHeader.style.cssText = "margin:14px 0 6px; font-weight:700; color:#2563eb;";
-    cartList.appendChild(drinksHeader);
+    // --- Render Food ---
+    renderSection("🍱 Food Items", foodItems, false);
 
-    for (const [category, items] of Object.entries(drinkGroups)) {
-      const categoryDiv = document.createElement("div");
-      categoryDiv.innerHTML = `<h4 style="margin:10px 0 4px 6px; font-weight:600; color:#1e3a8a;">${category}</h4>`;
-      cartList.appendChild(categoryDiv);
-      renderSection("", items, true);
+    // --- Render Drinks grouped by category ---
+    if (drinkItems.length > 0) {
+        const drinksHeader = document.createElement("h3");
+        drinksHeader.textContent = "🍸 Drinks";
+        drinksHeader.style.cssText = "margin:14px 0 6px; font-weight:700; color:#2563eb;";
+        cartList.appendChild(drinksHeader);
+
+        for (const [category, items] of Object.entries(drinkGroups)) {
+            const categoryDiv = document.createElement("div");
+            categoryDiv.innerHTML = `<h4 style="margin:10px 0 4px 6px; font-weight:600; color:#1e3a8a;">${category}</h4>`;
+            cartList.appendChild(categoryDiv);
+            renderSection("", items, true);
+        }
     }
-  }
 
-  cartCount.textContent = cartItems.reduce((sum, i) => sum + i.qty, 0);
+    cartCount.textContent = cartItems.reduce((sum, i) => sum + i.qty, 0);
 }
 
 
 /* ---------- Tab switches ---------- */
 function activate(tab) {
-  activeTab = tab;
-  resetSearch();
+    activeTab = tab;
+    resetSearch();
 
-  // --- cập nhật trạng thái tab button ---
-  const tabs = [
-    { el: tabMenu, name: "menu" },
-    { el: tabDrink, name: "drink" },
-    { el: tabCart, name: "cart" },
-  ];
-  tabs.forEach(t => {
-    t.el.classList.toggle("tab-active", tab === t.name);
-    t.el.classList.toggle("tab-inactive", tab !== t.name);
-  });
+    // --- cập nhật trạng thái tab button ---
+    const tabs = [
+        { el: tabMenu, name: "menu" },
+        { el: tabDrink, name: "drink" },
+        { el: tabCart, name: "cart" },
+    ];
+    tabs.forEach(t => {
+        t.el.classList.toggle("tab-active", tab === t.name);
+        t.el.classList.toggle("tab-inactive", tab !== t.name);
+    });
 
-  // --- hiển thị nội dung tương ứng ---
-  menuTab.style.display  = (tab === "menu")  ? "block" : "none";
-  drinkTab.style.display = (tab === "drink") ? "block" : "none";
-  cartTab.style.display  = (tab === "cart")  ? "block" : "none";
+    // --- hiển thị nội dung tương ứng ---
+    menuTab.style.display = (tab === "menu") ? "block" : "none";
+    drinkTab.style.display = (tab === "drink") ? "block" : "none";
+    cartTab.style.display = (tab === "cart") ? "block" : "none";
 
-  // --- điều chỉnh hiển thị & bố cục search bar ---
-  searchBar.style.display = (tab !== "cart") ? "flex" : "none";
+    // --- điều chỉnh hiển thị & bố cục search bar ---
+    searchBar.style.display = (tab !== "cart") ? "flex" : "none";
 
-  if (tab === "menu") {
-    indexInput.style.display = "block";
-    indexInput.style.flex = "2";
-    searchInput.style.flex = "8";
-  } else if (tab === "drink") {
-    indexInput.style.display = "none";
-    searchInput.style.flex = "10";
-  }
+    if (tab === "menu") {
+        indexInput.style.display = "block";
+        indexInput.style.flex = "2";
+        searchInput.style.flex = "8";
+    } else if (tab === "drink") {
+        indexInput.style.display = "none";
+        searchInput.style.flex = "10";
+    }
 
-  // --- render nội dung ---
-  const renderMap = {
-    menu:  () => renderMenu(menuItems),
-    drink: () => renderDrinks(drinkItems),
-    cart:  () => renderCart(),
-  };
-  renderMap[tab]?.();
+    // --- render nội dung ---
+    const renderMap = {
+        menu: () => renderMenu(menuItems),
+        drink: () => renderDrinks(drinkItems),
+        cart: () => renderCart(),
+    };
+    renderMap[tab]?.();
 }
 
 
