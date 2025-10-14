@@ -44,6 +44,7 @@ function resetSearch() {
 }
 
 function filterActive() {
+    console.log("Filtering...");
     const q = searchInput.value.trim().toLowerCase();
     searchQuery = q;
     const idx = parseInt(indexInput.value);
@@ -286,9 +287,9 @@ function activate(tab) {
     }
 }
 
-tabMenu.onclick = () => activate("menu");
-tabDrink.onclick = () => activate("drink");
-tabCart.onclick = () => activate("cart");
+tabMenu.onclick = () => {activate("menu");renderMenu(menuItems);};
+tabDrink.onclick = () => {activate("drink");renderDrinks(drinkItems);};
+tabCart.onclick = () => {activate("cart");renderCart();};
 
 /* ---------- Search bindings ---------- */
 searchInput.oninput = filterActive;
