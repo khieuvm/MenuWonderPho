@@ -294,9 +294,9 @@ function renderCart() {
       `;
 
             div.innerHTML = `
-        <div style="display:flex; align-items:center; gap:20px;">
-          ${infoHTML}
-          ${qtyHTML}
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:20px;">
+            ${infoHTML}
+            ${qtyHTML}
         </div>
       `;
 
