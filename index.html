@@ -145,14 +145,22 @@
             /* luôn giữ nút ổn định */
         }
         
+        .clear-btn:focus {
+            outline: none;
+            background: #f3f4f6;
+            color: black;
+        }
+        
+        @media (hover: hover) {
+            .clear-btn:hover {
+                background: #ef4444;
+                color: white;
+            }
+        }
+        
         #indexInput,
         #searchInput {
             transition: all 0.25s ease;
-        }
-        
-        .clear-btn:hover {
-            background: #ef4444;
-            color: white;
         }
         
         .push {
