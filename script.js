@@ -377,7 +377,6 @@ tabCart.onclick = () => activate("cart");
 
 btnClearSearch.onclick = () => {
     resetSearch();
-    btnClearSearch.blur();
 
     // Reset list
     if (activeTab === "menu") renderMenu(menuItems);
