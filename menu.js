@@ -120,3 +120,76 @@ const menuItems = [
   {name:"Jasmine Rice", nameVN:"Cơm trắng", price:2.90},
   {name:"Egg Fried Rice", nameVN:"Cơm chiên trứng", price:3.90}
 ];
+
+
+const drinkItems = [
+  // VIETNAMESE COFFEE
+  {
+    category: "Vietnamese Coffee",
+    name: "Rich Vietnamese Hot Coffee",
+    nameVN: "Cà phê nóng",
+    options: [{ label: "Black", price: 3.50 }, { label: "With condensed milk", price: 3.50 }] 
+  },
+  {
+    category: "Vietnamese Coffee",
+    name: "Vietnamese Iced Coffee",
+    nameVN: "Cà phê đá",
+    options: [{ label: "Black", price: 3.50 }, { label: "With condensed milk", price: 3.50 }] 
+  },
+
+  // TEA
+  { category: "Tea", name: "Chamomile", nameVN: "Trà hoa cúc", options: [{ label: "Regular", price: 3.50 }] },
+  { category: "Tea", name: "Mint Tea", nameVN: "Trà bạc hà", options: [{ label: "Regular", price: 2.25 }] },
+  { category: "Tea", name: "Green Tea", nameVN: "Trà xanh", options: [{ label: "Regular", price: 2.25 }] },
+  { category: "Tea", name: "Jasmine Tea", nameVN: "Trà hoa nhài", options: [{ label: "Regular", price: 2.25 }] },
+  { category: "Tea", name: "Orange Lemon Grass Peach Tea", nameVN: "Trà đào cam sả", options: [{ label: "Regular", price: 4.00 }] },
+  { category: "Tea", name: "Peach Milk Ice Tea", nameVN: "Trà sữa thạch đào", options: [{ label: "Regular", price: 4.00 }] },
+  { category: "Tea", name: "Butterfly Pea Tea Lemonade", nameVN: "Trà chanh hoa đậu biếc", options: [{ label: "Regular", price: 3.50 }] },
+
+  //DESSERT
+  { category: "Dessert", name: "Classic Vietnam Multi Colours Dessert", nameVN: "Chè thập cẩm", options: [{ label: "Regular", price: 4.50 }] },
+  { category: "Dessert", name: "Vietnamese Style Fruit Salad", nameVN: "Hoa quả dầm", options: [{ label: "Regular", price: 4.50 }] },
+
+
+  //TODO
+
+  // BEER & CIDER
+  { category: "Beer & Cider", name: "Hanoi Beer", nameVN: "Bia Hà Nội", options: [{ label: "330ml", price: 4.50 }] },
+  { category: "Beer & Cider", name: "Saigon Beer", nameVN: "Bia Sài Gòn", options: [{ label: "330ml", price: 4.50 }] },
+  { category: "Beer & Cider", name: "Asahi", nameVN: "Asahi", options: [{ label: "330ml", price: 4.00 }] },
+  { category: "Beer & Cider", name: "Corona Extra", nameVN: "Corona", options: [{ label: "330ml", price: 4.00 }] },
+  { category: "Beer & Cider", name: "Stella Artois", nameVN: "Stella", options: [{ label: "275ml", price: 4.00 }] },
+  { category: "Beer & Cider", name: "Heineken 0.0% Alc Free", nameVN: "Heineken 0.0%", options: [{ label: "330ml", price: 3.50 }] },
+  { category: "Beer & Cider", name: "Kopparberg Mixed Fruit", nameVN: "Kopparberg mixed fruit", options: [{ label: "500ml", price: 5.50 }] },
+  { category: "Beer & Cider", name: "Kopparberg Strawberry & Lime", nameVN: "Kopparberg dâu & chanh", options: [{ label: "500ml", price: 5.50 }] },
+
+  // COCKTAILS
+  { category: "Cocktails", name: "Pornstar Martini", nameVN: "Pornstar Martini", options: [{ label: "Regular", price: 7.50 }] },
+  { category: "Cocktails", name: "Espresso Martini", nameVN: "Espresso Martini", options: [{ label: "Regular", price: 7.50 }] },
+  { category: "Cocktails", name: "Strawberry Daiquiri", nameVN: "Dâu Daiquiri", options: [{ label: "Regular", price: 7.50 }] },
+  { category: "Cocktails", name: "Pina Colada", nameVN: "Pina Colada", options: [{ label: "Regular", price: 7.50 }] },
+
+  // SOFT DRINKS
+  { category: "Soft Drink", name: "Coca Cola", nameVN: "Coca", options: [{ label: "330ml", price: 2.90 }] },
+  { category: "Soft Drink", name: "Diet Coke", nameVN: "Diet Coke", options: [{ label: "330ml", price: 2.70 }] },
+  { category: "Soft Drink", name: "Apple Juice", nameVN: "Nước táo", options: [{ label: "Glass", price: 2.50 }] },
+  { category: "Soft Drink", name: "Orange Juice", nameVN: "Nước cam", options: [{ label: "Glass", price: 2.50 }] },
+  { category: "Soft Drink", name: "Still Water", nameVN: "Nước suối", options: [{ label: "330ml", price: 1.95 }, { label: "750ml", price: 3.75 }] },
+
+  // WINE (ví dụ)
+  { category: "White Wine", name: "Molino Del Sol Airen (Spain)", nameVN: "Vang trắng Airen", options: [{ label: "175ml", price: 3.50 }, { label: "250ml", price: 5.00 }, { label: "BTL", price: 15.00 }] },
+  { category: "Red Wine", name: "Central Monte Merlot (Chile)", nameVN: "Vang đỏ Merlot", options: [{ label: "BTL", price: 17.00 }] },
+
+  // SPIRITS
+  { category: "Vodka & Gin", name: "Absolut Vodka", nameVN: "Absolut", options: [{ label: "25ml", price: 3.50 }] },
+  { category: "Whiskey", name: "Jack Daniel’s Whiskey", nameVN: "Jack Daniel’s", options: [{ label: "25ml", price: 3.50 }] },
+  
+
+
+
+  // JUICE
+  { category: "Juice", name: "Fresh Lemon Juice", nameVN: "Nước chanh tươi", options: [{ label: "Regular", price: 2.95 }] },
+  { category: "Juice", name: "Coconut Juice", nameVN: "Nước dừa", options: [{ label: "Regular", price: 2.95 }] },
+
+];
+ 

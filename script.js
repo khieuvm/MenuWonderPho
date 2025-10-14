@@ -1,135 +1,256 @@
 const menuList = document.getElementById("menuList");
+const drinkList = document.getElementById("drinkList");
 const searchInput = document.getElementById("searchInput");
-const indexInput = document.getElementById("indexInput");
+const indexInput  = document.getElementById("indexInput");
 const toast = document.getElementById("toast");
-const tabMenu = document.getElementById("tabMenu");
-const tabCart = document.getElementById("tabCart");
-const menuTab = document.getElementById("menuTab");
-const cartTab = document.getElementById("cartTab");
+const tabMenu  = document.getElementById("tabMenu");
+const tabDrink = document.getElementById("tabDrink");
+const tabCart  = document.getElementById("tabCart");
+const menuTab  = document.getElementById("menuTab");
+const drinkTab = document.getElementById("drinkTab");
+const cartTab  = document.getElementById("cartTab");
 const cartList = document.getElementById("cartList");
-const cartTotal = document.getElementById("cartTotal");
-const cartCount = document.getElementById("cartCount");
-const cartEmpty = document.getElementById("cartEmpty");
-const btnClear = document.getElementById("btnClear");
-const btnDone = document.getElementById("btnDone");
-
+const cartTotal= document.getElementById("cartTotal");
+const cartCount= document.getElementById("cartCount");
+const cartEmpty= document.getElementById("cartEmpty");
+const btnDone  = document.getElementById("btnDone");
+const searchBar= document.getElementById("searchBar");
+ 
 let cart = JSON.parse(localStorage.getItem("cart") || "[]");
-
-function saveCart() {
-  localStorage.setItem("cart", JSON.stringify(cart));
-  renderCart();
-}
-
-function showToast(msg = "Đã thêm vào giỏ hàng") {
-  toast.textContent = msg;
-  toast.style.display = "block";
-  setTimeout(() => (toast.style.display = "none"), 1000);
-}
-
-function filterMenu() {
+let activeTab = "menu"; // menu | drink | cart
+ 
+function saveCart(){ localStorage.setItem("cart", JSON.stringify(cart)); renderCart(); }
+function showToast(msg="Đã thêm vào giỏ hàng"){ toast.textContent=msg; toast.style.display="block"; setTimeout(()=>toast.style.display="none", 1000); }
+ 
+function filterActive(){
   const text = searchInput.value.trim().toLowerCase();
-  const idx = parseInt(indexInput.value);
-  let filtered = menuItems;
+  const idx  = parseInt(indexInput.value);
+  let data   = activeTab==="drink" ? drinkItems : menuItems;
+  let filtered = data;
+ 
   if (!isNaN(idx)) filtered = filtered.filter(i => i.index === idx);
   else if (text) filtered = filtered.filter(i =>
-    i.name.toLowerCase().includes(text) ||
-    i.nameVN.toLowerCase().includes(text)
+    (i.name||"").toLowerCase().includes(text) ||
+    (i.nameVN||"").toLowerCase().includes(text)
   );
-  renderMenu(filtered);
+ 
+  if (activeTab==="drink") renderDrinks(filtered);
+  else renderMenu(filtered);
 }
-
-function renderMenu(items) {
+ 
+/* ---------- MENU LIST (giữ nút + bên phải) ---------- */
+function renderMenu(items){
   menuList.innerHTML = "";
+  items.forEach(item=>{
+    const div = document.createElement("div");
+    div.style.cssText = "background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.1);padding:12px;display:flex;justify-content:space-between;align-items:center;margin:6px 0;";
+    const info = document.createElement("div");
+    info.style.cssText = "flex:1;margin-right:10px;";
+    info.innerHTML = `
+      <div style="font-weight:600;">${item.index? item.index+". " : ""}${item.name}</div>
+      <div style="font-style:italic;color:#4b5563;margin-left:20px;">${item.nameVN||""}</div>
+    `;
+    const btn = document.createElement("button");
+    btn.textContent = "+";
+    btn.style.cssText = "background:#16a34a;color:#fff;font-size:1.1rem;border:none;border-radius:6px;padding:4px 10px;margin-left:10px;margin-right:4px;cursor:pointer;";
+    btn.onmouseover=()=>btn.style.background="#15803d";
+    btn.onmouseout =()=>btn.style.background="#16a34a";
+    btn.onclick = ()=> addToCart({...item, sizeLabel:null});
+    div.appendChild(info); div.appendChild(btn); menuList.appendChild(div);
+  });
+}
+ 
+function renderDrinks(items) {
+  drinkList.innerHTML = "";
   items.forEach(item => {
     const div = document.createElement("div");
-    div.className = "bg-white rounded shadow p-3 flex justify-between items-center";
-    div.innerHTML = `
-      <div>
-        <div class="font-semibold">${item.index ? item.index + ". " : ""}${item.name}</div>
-        <div class="text-sm italic text-gray-500">${item.nameVN}</div>
-        <div class="text-gray-600">£${item.price.toFixed(2)}</div>
-      </div>
-      <button class="bg-green-500 text-white px-3 py-1 rounded">+</button>
+    div.style.cssText = `
+      background:#fff;
+      border-radius:8px;
+      box-shadow:0 1px 4px rgba(0,0,0,0.1);
+      padding:12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin:6px 0;
     `;
-    div.querySelector("button").onclick = () => {
-      addToCart(item);
-      showToast();
-    };
-    menuList.appendChild(div);
+ 
+    // --- Left info ---
+    const info = document.createElement("div");
+    info.style.cssText = "flex:1;margin-right:10px;";
+    info.innerHTML = `
+      <div style="font-weight:600;">${item.name}</div>
+      <div style="font-style:italic;color:#4b5563;margin-left:20px;">${item.nameVN || ""}</div>
+    `;
+ 
+    // --- Right side (select / label / button) ---
+    const right = document.createElement("div");
+    right.style.cssText = "display:flex;align-items:center;gap:8px;flex-shrink:0;";
+ 
+    const btn = document.createElement("button");
+    btn.textContent = "+";
+    btn.style.cssText = `
+      background:#16a34a;
+      color:#fff;
+      font-size:1.1rem;
+      border:none;
+      border-radius:6px;
+      padding:4px 10px;
+      cursor:pointer;
+    `;
+    btn.onmouseover = () => (btn.style.background = "#15803d");
+    btn.onmouseout = () => (btn.style.background = "#16a34a");
+ 
+    const options = item.options || [{ label: "Regular", price: item.price }];
+    const nonRegular = options.filter(o => o.label.toLowerCase() !== "regular");
+ 
+    // Logic hiển thị tuỳ theo số lượng option
+    if (options.length === 1 && options[0].label.toLowerCase() === "regular") {
+      // ✅ Chỉ 1 option Regular → không hiển thị gì thêm
+      btn.onclick = () => addToCart({ ...item, sizeLabel: null, price: options[0].price });
+    }
+    else if (options.length === 1) {
+      // ✅ Chỉ 1 option (nhưng không phải Regular) → hiển thị text label
+      const label = document.createElement("div");
+      label.textContent = options[0].label;
+      label.style.cssText = "color:#374151;font-weight:500;";
+      right.appendChild(label);
+      btn.onclick = () => addToCart({ ...item, sizeLabel: options[0].label, price: options[0].price });
+    }
+    else {
+      // ✅ Nhiều options → hiển thị dropdown (chỉ label, không giá)
+      const sel = document.createElement("select");
+      sel.style.cssText = "border:1px solid #d1d5db;border-radius:6px;padding:6px 8px;";
+      nonRegular.forEach((op, ix) => {
+        const o = document.createElement("option");
+        o.value = ix;
+        o.text = op.label; // 👈 chỉ label, không giá
+        sel.appendChild(o);
+      });
+      right.appendChild(sel);
+ 
+      btn.onclick = () => {
+        const choice = nonRegular[sel.value] || options[0];
+        addToCart({ ...item, sizeLabel: choice.label, price: choice.price });
+      };
+    }
+ 
+    right.appendChild(btn);
+    div.appendChild(info);
+    div.appendChild(right);
+    drinkList.appendChild(div);
   });
 }
-
-function addToCart(item) {
-  const existing = cart.find(c => c.name === item.name);
-  if (existing) existing.qty++;
-  else cart.push({...item, qty:1});
+ 
+ 
+/* ---------- CART ---------- */
+function addToCart(item){
+  // match by name + size (nếu có)
+  const key = (x)=> `${x.name}__${x.sizeLabel||""}`;
+  const found = cart.find(x=> key(x)===key(item));
+  if(found) found.qty++;
+  else cart.push({name:item.name,nameVN:item.nameVN,index:item.index,price:item.price,qty:1,sizeLabel:item.sizeLabel});
   saveCart();
-  showToast();
+  showToast(); // KHÔNG auto switch cart
 }
-
+ 
+/* ---------- Confirm & Clear when Done ---------- */
+btnDone.onclick = () => {
+  if (cart.length === 0) {
+    alert("Giỏ hàng trống 🍃");
+    return;
+  }
+  const ok = confirm("Bạn có chắc muốn hoàn tất đơn hàng không?");
+  if (ok) {
+    cart = [];
+    saveCart();
+    showToast("Đơn hàng đã được hoàn tất ✅");
+    activate("menu"); // quay lại menu sau khi hoàn tất
+  }
+};
+ 
 function renderCart() {
   cartList.innerHTML = "";
+ 
   if (cart.length === 0) {
-    cartEmpty.classList.remove("hidden");
+    cartEmpty.style.display = "block";
+    btnDone.style.display = "none"; // 👈 Ẩn nút khi giỏ hàng trống
   } else {
-    cartEmpty.classList.add("hidden");
+    cartEmpty.style.display = "none";
+    btnDone.style.display = "inline-block"; // 👈 Hiện lại khi có món
   }
+ 
   let total = 0, qty = 0;
   cart.forEach((line, idx) => {
-    const subtotal = line.price * line.qty;
-    total += subtotal;
+    total += line.price * line.qty;
     qty += line.qty;
-    const el = document.createElement("div");
-    el.className = "bg-white rounded shadow p-3 flex justify-between items-center";
-    el.innerHTML = `
-      <div>
-        <div class="font-semibold">${line.name}</div>
-        <div class="italic text-gray-500 text-sm">${line.nameVN}</div>
-        <div class="text-sm text-gray-600">x${line.qty} – £${subtotal.toFixed(2)}</div>
-      </div>
-      <button class="text-red-500">✖</button>
+ 
+    const row = document.createElement("div");
+    row.style.cssText = "background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.1);padding:12px;display:flex;justify-content:space-between;align-items:center;margin:6px 0;";
+    const info = document.createElement("div");
+    info.style.cssText = "flex:1;margin-right:10px;";
+    const sizeTxt = line.sizeLabel ? ` <span style='color:#6b7280;'>(${line.sizeLabel})</span>` : "";
+    info.innerHTML = `
+      <div style='font-weight:600;'>${line.name}${sizeTxt}</div>
+      <div style='font-style:italic;color:#4b5563;margin-left:20px;'>${line.nameVN || ""}</div>
     `;
-    el.querySelector("button").onclick = () => {
-      cart.splice(idx, 1);
-      saveCart();
-    };
-    cartList.appendChild(el);
+ 
+    const right = document.createElement("div");
+    right.style.cssText = "display:flex;align-items:center;gap:10px;flex-shrink:0;margin-left:10px;";
+    const qtyDiv = document.createElement("div");
+    qtyDiv.textContent = "x" + line.qty;
+    qtyDiv.style.cssText = "font-weight:600;color:#374151;min-width:30px;text-align:right;";
+    const del = document.createElement("button");
+    del.textContent = "✖";
+    del.style.cssText = "background:none;color:#dc2626;font-size:1.2rem;border:none;cursor:pointer;padding:0 6px;";
+    del.onmouseover = () => (del.style.color = "#b91c1c");
+    del.onmouseout = () => (del.style.color = "#dc2626");
+    del.onclick = () => { cart.splice(idx, 1); saveCart(); };
+ 
+    right.appendChild(qtyDiv);
+    right.appendChild(del);
+    row.appendChild(info);
+    row.appendChild(right);
+    cartList.appendChild(row);
   });
+ 
   cartTotal.textContent = "£" + total.toFixed(2);
   cartCount.textContent = qty;
 }
-
-btnClear.onclick = () => {
-  if (cart.length && confirm("Bạn có chắc muốn xóa toàn bộ giỏ hàng?")) {
-    cart = [];
-    saveCart();
-  }
-};
-
-btnDone.onclick = () => {
-  if (cart.length === 0) return alert("Giỏ hàng trống!");
-  showToast("Đơn hàng đã được ghi nhận!");
-  cart = [];
-  saveCart();
-};
-
-tabMenu.onclick = () => {
-  tabMenu.classList.add("tab-active");
-  tabCart.classList.remove("tab-active");
-  menuTab.classList.remove("hidden");
-  cartTab.classList.add("hidden");
-};
-
-tabCart.onclick = () => {
-  tabCart.classList.add("tab-active");
-  tabMenu.classList.remove("tab-active");
-  cartTab.classList.remove("hidden");
-  menuTab.classList.add("hidden");
-  renderCart();
-};
-
-searchInput.oninput = filterMenu;
-indexInput.oninput = filterMenu;
-
+ 
+ 
+/* ---------- Tab switches ---------- */
+function activate(tab){
+  activeTab = tab;
+  // tabs
+  const on  = (el)=>{el.classList.add("tab-active");el.classList.remove("tab-inactive");};
+  const off = (el)=>{el.classList.remove("tab-active");el.classList.add("tab-inactive");};
+  (tab==="menu") ? on(tabMenu)  : off(tabMenu);
+  (tab==="drink")? on(tabDrink) : off(tabDrink);
+  (tab==="cart") ? on(tabCart)  : off(tabCart);
+ 
+  // views
+  menuTab.style.display  = tab==="menu"  ? "block":"none";
+  drinkTab.style.display = tab==="drink" ? "block":"none";
+  cartTab.style.display  = tab==="cart"  ? "block":"none";
+ 
+  // search bar hiện ở menu + drink
+  searchBar.style.display = (tab==="cart") ? "none":"flex";
+  indexInput.style.display = (tab === "drink") ? "none" : "block";
+ 
+  if(tab==="cart") renderCart();
+  else filterActive();
+}
+ 
+tabMenu.onclick  = ()=> activate("menu");
+tabDrink.onclick = ()=> activate("drink");
+tabCart.onclick  = ()=> activate("cart");
+ 
+/* ---------- Search bindings ---------- */
+searchInput.oninput = filterActive;
+indexInput.oninput  = filterActive;
+ 
+/* ---------- Init ---------- */
 renderMenu(menuItems);
+renderDrinks(drinkItems);
 renderCart();
