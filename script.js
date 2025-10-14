@@ -294,7 +294,7 @@ function renderCart() {
       `;
 
             div.innerHTML = `
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:20px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:20px;width:100%;">
             ${infoHTML}
             ${qtyHTML}
         </div>
