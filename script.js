@@ -171,6 +171,9 @@ function renderCart() {
   if (cart.length === 0) {
     btnDone.style.display = "none"; // 👈 Ẩn nút khi giỏ hàng trống
   }
+  else {
+    btnDone.style.display = "block"; // 👈 Hiện nút khi có món trong giỏ
+  }
 
   let total = 0, qty = 0;
   cart.forEach((line, idx) => {
