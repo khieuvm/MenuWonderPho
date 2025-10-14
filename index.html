@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>🍜 Menu Select</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="WonderPho Menu">
+<link rel="apple-touch-icon" href="icon.png">
+  <title>🍜 WonderPho Menu</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.3/dist/tailwind.min.css" rel="stylesheet">
   <style>
     .tab-active {
@@ -32,62 +36,143 @@
       margin: 0;
       background: #e5e7eb;
       display: flex;
-      justify-content: center;
-      align-items: center;
+        flex-direction: column;
+      overflow: auto;
     }
-    .main-container {
-      width: 100%;
-      max-width: 480px;
-      height: 95vh;
-      display: flex;
-      flex-direction: column;
-      background: #fff;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+.main-container {
+  width: 100%;
+  height: 100vh;          /* 🔹 chiếm toàn bộ chiều cao màn hình */
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  overflow: auto;
+}
+.content-area {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  overflow: auto;
+}
+
+   
+  .safe-top {
+  padding-top: env(safe-area-inset-top);
+  padding-top: constant(safe-area-inset-top);
     }
-    .content-area {
-      flex: 1;
-      overflow-y: auto;
-      padding: 0.5rem;
-      -webkit-overflow-scrolling: touch;
-      height: 100%;
-    }
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Header box và Search box tách riêng */
+.header-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+
+/* Buttons */
+.header-btn {
+  background: #f1f5f9;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  white-space: nowrap;
+  transition: 0.2s;
+}
+.header-btn:hover {
+  background: #e2e8f0;
+}
+
+/* --- Search Box Layout --- */
+.search-box {
+  display: flex;
+  /* align-items: center; */
+  border-top: 1px solid #e5e7eb;
+  padding: 6px 10px;
+  background: #f9fafb;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.push {
+  margin-left: auto;
+}
+
+/* Search input style */
+.search-input {
+  font-size: 0.9rem;
+  padding: 5px;
+  height: 20px;
+  width: 93%;
+  transition: width 0.3s ease;
+}
+
+/* Từng vùng */
+.search-area {
+  flex: 9;
+  font-size: 0.9rem;
+  padding-right: 10px;
+}
+
+.index-area {
+  flex: 1;
+  font-size: 0.9rem;
+  padding-right: 10px;
+}
+
+/* Scrollbar ẩn */
+.header-box::-webkit-scrollbar,
+.search-box::-webkit-scrollbar { display: none; }
+.header-box, .search-box { -ms-overflow-style: none; scrollbar-width: none; }
+
+#btnDone {
+    display: block;
+  margin: 10px auto;
+  font-size: 1rem;
+  letter-spacing: .3px;
+  box-shadow: 0 4px 10px rgba(34,197,94,.25);
+}
+.btncenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
   </style>
 </head>
 
 <body>
-  <div class="toast" id="toast">Đã thêm vào giỏ hàng</div>
+  <div class="toast" id="toast"></div>
 
   <div class="main-container">
     <!-- Sticky header -->
-    <div class="sticky top-0 bg-white z-40 border-b">
+    <div class="sticky top-0 bg-white z-40 border-b safe-top">
 
-      <!-- Tabs Header -->
-      <div class="flex items-center justify-between text-base font-semibold px-1 flex-nowrap overflow-x-auto no-scrollbar">
-        <!-- Nhóm trái -->
-        <div class="flex items-center gap-2 min-w-0">
-          <button id="tabMenu"  class="py-2 px-3 tab-active rounded-tl-lg flex-shrink-0">🍜 Menu</button>
-   <button id="tabDrink" class="py-2 px-3 tab-inactive rounded-tr-lg flex-shrink-0">🥤 Drink</button>
-   <button id="tabCart"  class="py-2 px-3 tab-inactive rounded-md flex-shrink-0 ml-2"> 🛒 Cart (<span id="cartCount">0</span>)
-   </button>
-        </div>
-      </div>
+<!-- Header -->
+<div class="header-box safe-top">
+  <button id="tabMenu"  class="header-btn tab-active">🍜 Menu</button>
+  <button id="tabDrink" class="header-btn tab-inactive">🥤 Drinks</button>
+  <button id="tabCart"  class="header-btn tab-inactive push">🛒 Cart (<span id="cartCount">0</span>)</button>
+</div>
 
-      <!-- Search Bar -->
-      <div id="searchBar"
-     class="flex flex-nowrap items-center justify-between gap-2 p-2 border-t bg-gray-50 overflow-x-auto no-scrollbar">
-        <div class="flex-[8] min-w-0">
-  <input id="searchInput" type="text" placeholder="🔍 Tìm món (Anh / Việt)"
-    class="w-full border rounded px-2 py-1.5 text-sm focus:outline-green-500">
+<!-- Search Box -->
+<div class="search-box">
+  <div class="search-area">
+    <input id="searchInput" type="text" placeholder="🔍 Search items (English / Vietnamese)"
+           class="search-input border rounded focus:outline-green-500">
   </div>
-  <div class="flex-[2] min-w-[60px] flex-shrink-0">
-  <input id="indexInput" type="number" placeholder="Index"
-    class="w-full border rounded px-2 py-1.5 text-center text-sm focus:outline-green-500">
+  <div class="push index-area">
+    <input id="indexInput" type="number" placeholder="Index"
+           class="search-input border rounded focus:outline-green-500">
   </div>
-      </div>
+</div>
+
     </div>
 
     <!-- Nội dung -->
@@ -105,17 +190,18 @@
       <!-- CART TAB -->
       <div id="cartTab" style="display:none;">
         <div id="cartList"></div>
-        <div id="cartEmpty" class="text-center text-gray-500 py-6" style="display:none;">Giỏ hàng trống 🍃</div>
         <div class="border-t pt-3 mt-3">
           <div class="flex justify-between font-semibold mb-2" style="display:none;">
-            <span>Tổng cộng:</span> <span id="cartTotal">£0.00</span>
+            <span>Total:</span> <span id="cartTotal">£0.00</span>
           </div>
-          <div class="pb-6 flex justify-center">
+          <div class="flex justify-center py-6 border-t mt-3">
+            <div class="btncenter">
             <button id="btnDone"
-              class="bg-green-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-green-700 transition">
-              ✅ Hoàn tất đơn
+                class="bg-green-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-green-700 transition">
+                ✅ Complete Order
             </button>
-          </div>
+            </div>
+            </div>
         </div>
       </div>
     </div>
@@ -126,4 +212,3 @@
   <script src="script.js"></script>
 </body>
 </html>
- 
