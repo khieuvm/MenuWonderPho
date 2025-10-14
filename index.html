@@ -95,41 +95,69 @@
             background: #e2e8f0;
         }
         /* --- Search Box Layout --- */
+        /* --- SEARCH AREA --- */
         
         .search-box {
             display: flex;
-            /* align-items: center; */
-            border-top: 1px solid #e5e7eb;
-            padding: 6px 10px;
-            background: #f9fafb;
+            align-items: center;
+            gap: 10px;
+            width: calc(100% - 20px);
+            margin: 10px;
             flex-wrap: nowrap;
-            overflow-x: auto;
+            overflow-x: none;
+            /* center horizontally */
+        }
+        
+        .index-input {
+            flex: 2;
+            min-width: 60px;
+            padding: 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 1rem;
+            flex-shrink: 1;
+        }
+        
+        .search-input {
+            flex: 8;
+            min-width: 150px;
+            padding: 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 1rem;
+            flex-shrink: 1;
+        }
+        
+        .clear-btn {
+            flex: 1;
+            min-width: 45px;
+            text-align: center;
+            padding: 8px 0;
+            border: none;
+            border-radius: 6px;
+            background: #f3f4f6;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.2s, color 0.2s;
+            flex-shrink: 0;
+            /* luôn giữ nút ổn định */
+        }
+        
+        #indexInput,
+        #searchInput {
+            transition: all 0.25s ease;
+        }
+        
+        .clear-btn:hover {
+            background: #ef4444;
+            color: white;
         }
         
         .push {
             margin-left: auto;
         }
-        /* Search input style */
-        
-        .search-input {
-            font-size: 16px;
-            padding: 5px;
-            height: 20px;
-            width: 93%;
-            transition: width 0.3s ease;
-        }
-        /* Từng vùng */
-        
-        .search-area {
-            flex: 9;
-            padding-right: 10px;
-        }
-        
-        .index-area {
-            flex: 1;
-            padding-right: 10px;
-        }
-        /* Scrollbar ẩn */
         
         .header-box::-webkit-scrollbar,
         .search-box::-webkit-scrollbar {
@@ -157,6 +185,11 @@
             transition: 0.2s;
         }
         
+        #btnDone:hover {
+            color: #ef4444;
+            /* đỏ nhẹ khi hover */
+        }
+        
         .btncenter {
             display: flex;
             justify-content: center;
@@ -182,12 +215,9 @@
 
             <!-- Search Box -->
             <div class="search-box">
-                <div class="search-area">
-                    <input id="searchInput" type="text" placeholder="🔍 Search items (English / Vietnamese)" class="search-input border rounded focus:outline-green-500">
-                </div>
-                <div class="push index-area">
-                    <input id="indexInput" type="number" placeholder="Index" class="search-input border rounded focus:outline-green-500">
-                </div>
+                <input id="indexInput" type="number" placeholder="Index" class="index-input">
+                <input id="searchInput" type="text" placeholder="🔍 Search (English / Vietnamese)" class="search-input">
+                <button id="btnClearSearch" class="clear-btn">❌</button>
             </div>
 
         </div>

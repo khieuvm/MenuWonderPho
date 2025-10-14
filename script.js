@@ -1,6 +1,5 @@
 const menuList = document.getElementById("menuList");
 const drinkList = document.getElementById("drinkList");
-const searchInput = document.getElementById("searchInput");
 const toast = document.getElementById("toast");
 const tabMenu = document.getElementById("tabMenu");
 const tabDrink = document.getElementById("tabDrink");
@@ -12,9 +11,10 @@ const cartList = document.getElementById("cartList");
 const cartTotal = document.getElementById("cartTotal");
 const cartCount = document.getElementById("cartCount");
 const btnDone = document.getElementById("btnDone");
-// ✅ Cập nhật selector mới theo HTML
 const searchBar = document.querySelector('.search-box');
+const searchInput = document.getElementById("searchInput");
 const indexInput = document.getElementById('indexInput');
+const btnClearSearch = document.getElementById("btnClearSearch");
 
 let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 let activeTab = "menu"; // menu | drink | cart
@@ -256,40 +256,59 @@ function renderCart() {
 
 /* ---------- Tab switches ---------- */
 function activate(tab) {
-    activeTab = tab;
-    resetSearch();
+  activeTab = tab;
+  resetSearch();
 
-    tabMenu.classList.toggle("tab-active", tab === "menu");
-    tabMenu.classList.toggle("tab-inactive", tab !== "menu");
-    tabDrink.classList.toggle("tab-active", tab === "drink");
-    tabDrink.classList.toggle("tab-inactive", tab !== "drink");
-    tabCart.classList.toggle("tab-active", tab === "cart");
-    tabCart.classList.toggle("tab-inactive", tab !== "cart");
+  // --- cập nhật trạng thái tab button ---
+  const tabs = [
+    { el: tabMenu, name: "menu" },
+    { el: tabDrink, name: "drink" },
+    { el: tabCart, name: "cart" },
+  ];
+  tabs.forEach(t => {
+    t.el.classList.toggle("tab-active", tab === t.name);
+    t.el.classList.toggle("tab-inactive", tab !== t.name);
+  });
 
-    menuTab.style.display = (tab === "menu") ? "block" : "none";
-    drinkTab.style.display = (tab === "drink") ? "block" : "none";
-    cartTab.style.display = (tab === "cart") ? "block" : "none";
+  // --- hiển thị nội dung tương ứng ---
+  menuTab.style.display  = (tab === "menu")  ? "block" : "none";
+  drinkTab.style.display = (tab === "drink") ? "block" : "none";
+  cartTab.style.display  = (tab === "cart")  ? "block" : "none";
 
-    // ✅ Ẩn search bar khi ở cart
-    searchBar.style.display = (tab === "cart") ? "none" : "flex";
+  // --- điều chỉnh hiển thị & bố cục search bar ---
+  searchBar.style.display = (tab !== "cart") ? "flex" : "none";
 
-    // ✅ Ẩn ô Index khi ở tab Drinks hoặc Cart
-    indexInput.style.display = (tab === "drink" || tab === "cart") ? "none" : "block";
+  if (tab === "menu") {
+    indexInput.style.display = "block";
+    indexInput.style.flex = "2";
+    searchInput.style.flex = "8";
+  } else if (tab === "drink") {
+    indexInput.style.display = "none";
+    searchInput.style.flex = "10";
+  }
 
-    if (tab === "menu") {
-        indexInput.parentElement.style.flex = "1";
-        indexInput.parentElement.style.paddingRight = "10px";
-        searchInput.style.width = "93%";
-    } else if (tab === "drink") {
-        indexInput.parentElement.style.flex = "0";
-        indexInput.parentElement.style.paddingRight = "5px";
-        searchInput.style.width = "100%";
-    }
+  // --- render nội dung ---
+  const renderMap = {
+    menu:  () => renderMenu(menuItems),
+    drink: () => renderDrinks(drinkItems),
+    cart:  () => renderCart(),
+  };
+  renderMap[tab]?.();
 }
 
-tabMenu.onclick = () => {activate("menu");renderMenu(menuItems);};
-tabDrink.onclick = () => {activate("drink");renderDrinks(drinkItems);};
-tabCart.onclick = () => {activate("cart");renderCart();};
+
+tabMenu.onclick = () => activate("menu");
+tabDrink.onclick = () => activate("drink");
+tabCart.onclick = () => activate("cart");
+
+
+btnClearSearch.onclick = () => {
+    resetSearch();
+
+    // Reset list
+    if (activeTab === "menu") renderMenu(menuItems);
+    else if (activeTab === "drink") renderDrinks(drinkItems);
+};
 
 /* ---------- Search bindings ---------- */
 searchInput.oninput = filterActive;
