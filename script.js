@@ -8,7 +8,6 @@ const menuTab = document.getElementById("menuTab");
 const drinkTab = document.getElementById("drinkTab");
 const cartTab = document.getElementById("cartTab");
 const cartList = document.getElementById("cartList");
-const cartTotal = document.getElementById("cartTotal");
 const cartCount = document.getElementById("cartCount");
 const btnDone = document.getElementById("btnDone");
 const searchBar = document.querySelector('.search-box');
@@ -16,12 +15,12 @@ const searchInput = document.getElementById("searchInput");
 const indexInput = document.getElementById('indexInput');
 const btnClearSearch = document.getElementById("btnClearSearch");
 
-let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+let cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
 let activeTab = "menu"; // menu | drink | cart
 let searchQuery = "";
 
 function saveCart() {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
     renderCart();
 }
 
@@ -183,20 +182,39 @@ function renderDrinks(items) {
 
 /* ---------- CART ---------- */
 function addToCart(item) {
-    // match by name + size (nếu có)
-    const key = (x) => `${x.name}__${x.sizeLabel||""}`;
-    const found = cart.find(x => key(x) === key(item));
-    if (found) found.qty++;
-    else cart.push({ name: item.name, nameVN: item.nameVN, index: item.index, price: item.price, qty: 1, sizeLabel: item.sizeLabel });
+  // Tạo đối tượng cart item chuẩn hoá
+  const newItem = {
+    name: item.name || null,
+    nameVN: item.nameVN || null,
+    category: item.category || null,
+    index: item.index ?? null,
+    price: item.price ?? 0,
+    sizeLabel: item.sizeLabel || null,
+    qty: 1
+  };
+
+  // Tìm xem trong cart đã có item tương tự chưa
+  const existing = cartItems.find(c =>
+    c.name === newItem.name &&
+    c.sizeLabel === newItem.sizeLabel &&
+    c.category === newItem.category
+  );
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cartItems.push(newItem);
+  }
     saveCart();
-    showToast(); // KHÔNG auto switch cart
+    showToast();
 }
+
 
 /* ---------- Confirm & Clear when Done ---------- */
 btnDone.onclick = () => {
     const ok = confirm("Are you sure you want to complete the order?");
     if (ok) {
-        cart = [];
+        cartItems = [];
         saveCart();
         showToast("Order completed successfully");
         activate("menu"); // quay lại menu sau khi hoàn tất
@@ -204,55 +222,175 @@ btnDone.onclick = () => {
 };
 
 function renderCart() {
-    cartList.innerHTML = "";
+  cartList.innerHTML = "";
 
-    if (cart.length === 0) {
-        btnDone.style.display = "none"; // 👈 Ẩn nút khi giỏ hàng trống
-    } else {
-        btnDone.style.display = "block"; // 👈 Hiện nút khi có món trong giỏ
-    }
+  if (cartItems.length === 0) {
+    cartCount.textContent = 0;
+    btnDone.style.display = "none";
+    cartList.innerHTML = `<div style="text-align:center; color:#6b7280; padding:20px;">Your cart is empty 🛒</div>`;
+    return;
+  }
 
-    let total = 0,
-        qty = 0;
-    cart.forEach((line, idx) => {
-        total += line.price * line.qty;
-        qty += line.qty;
+  btnDone.style.display = "block";
+    let qty = 0;
 
-        const row = document.createElement("div");
-        row.style.cssText = "background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.1);padding:12px;display:flex;justify-content:space-between;align-items:center;margin:6px 0;";
-        const info = document.createElement("div");
-        info.style.cssText = "flex:1;margin-right:10px;";
-        const sizeTxt = line.sizeLabel ? ` <span style='color:#6b7280;'>(${line.sizeLabel})</span>` : "";
-        info.innerHTML = `
-      <div style='font-weight:500;'>${line.name}${sizeTxt}</div>
-      <div style='font-style:italic;color:#4b5563;margin-left:18px;'>${line.nameVN || ""}</div>
+  cartItems.forEach(item => {
+    qty += item.qty;
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.style.cssText = `
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:#fff;
+      border-radius:8px;
+      padding:10px 12px;
+      box-shadow:0 1px 4px rgba(0,0,0,0.1);
+      margin:6px 0;
     `;
 
-        const right = document.createElement("div");
-        right.style.cssText = "display:flex;align-items:center;gap:10px;flex-shrink:0;margin-left:10px;";
-        const qtyDiv = document.createElement("div");
-        qtyDiv.textContent = "x" + line.qty;
-        qtyDiv.style.cssText = "font-weight:600;color:#374151;min-width:30px;text-align:right;";
-        const del = document.createElement("button");
-        del.textContent = "✖";
-        del.style.cssText = "background:none;color:#dc2626;font-size:1.2rem;border:none;cursor:pointer;padding:0 6px;";
-        del.onmouseover = () => (del.style.color = "#b91c1c");
-        del.onmouseout = () => (del.style.color = "#dc2626");
-        del.onclick = () => {
-            cart.splice(idx, 1);
-            saveCart();
-        };
+    const isDrink = !!item.category; // có category tức là drink
 
-        right.appendChild(qtyDiv);
-        right.appendChild(del);
-        row.appendChild(info);
-        row.appendChild(right);
-        cartList.appendChild(row);
+    console.log("isDrink:", isDrink, item);
+    // phần nội dung hiển thị
+    const infoHTML = isDrink
+      ? `
+          <div>
+            <strong>${item.name}</strong>
+            <div style="font-style:italic;color:#2563eb;margin-left:18px;">
+              ${item.category ? `${item.category}` : ""}
+              ${item.nameVN ? ` - ${item.nameVN}` : ""}
+              ${item.sizeLabel ? ` (${item.sizeLabel})` : ""}
+            </div>
+          </div>
+        `
+      : `
+          <div>
+            <strong>${item.index ? `${item.index}. ` : ""}${item.name}</strong>
+            <div style="font-style:italic;color:#4b5563;margin-left:18px;">
+              ${item.nameVN || ""}
+            </div>
+          </div>
+        `;
+
+    // phần số lượng bên phải
+    const qtyHTML = `
+      <div style="font-weight:600; font-size:1rem; color:#111827;">x${item.qty}</div>
+    `;
+
+    div.innerHTML = `${infoHTML}${qtyHTML}`;
+
+    // highlight nhẹ nếu là drink
+    if (isDrink) {
+        div.style.borderLeft = "5px solid #3b82f6";
+        div.style.background = "#eff6ff";
+    }
+
+    cartList.appendChild(div);
+  });
+  cartCount.textContent = qty;
+}
+
+function renderCart() {
+  cartList.innerHTML = "";
+
+  if (cartItems.length === 0) {
+    cartCount.textContent = 0;
+    btnDone.style.display = "none";
+    cartList.innerHTML = `<div style="text-align:center; color:#6b7280; padding:20px;">Your cart is empty 🛒</div>`;
+    return;
+  }
+
+  btnDone.style.display = "block";
+
+  const foodItems = cartItems.filter(i => !i.category);
+  const drinkItems = cartItems.filter(i => i.category);
+
+  // ✅ Helper: group drinks by category
+  const groupByCategory = (arr) => {
+    const groups = {};
+    arr.forEach(i => {
+      const cat = i.category || "Other Drinks";
+      if (!groups[cat]) groups[cat] = [];
+      groups[cat].push(i);
+    });
+    return groups;
+  };
+  const drinkGroups = groupByCategory(drinkItems);
+
+  // ✅ Helper: render section (food / drink group)
+  const renderSection = (title, items, isDrink = false) => {
+    if (items.length === 0) return;
+
+    const section = document.createElement("div");
+    section.innerHTML = `<h3 style="margin:10px 0; font-weight:600; color:${isDrink ? "#2563eb" : "#10b981"};">${title}</h3>`;
+
+    items.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "cart-item";
+      div.style.cssText = `
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        background:${isDrink ? "#eff6ff" : "#fff"};
+        border-radius:8px;
+        padding:10px 12px;
+        box-shadow:0 1px 4px rgba(0,0,0,0.1);
+        margin:6px 0;
+        border-left:4px solid ${isDrink ? "#3b82f6" : "#10b981"};
+      `;
+
+      const infoHTML = isDrink
+        ? `
+            <div>
+              <strong>${item.name}</strong>
+              <div style="font-style:italic;color:#2563eb;margin-left:18px;">
+                ${item.category ? `${item.category}` : ""}${item.nameVN ? ` - ${item.nameVN}` : ""}
+                ${item.sizeLabel ? ` (${item.sizeLabel})` : ""}
+              </div>
+            </div>
+          `
+        : `
+            <div>
+            <strong>${item.index ? `${item.index}. ` : ""}${item.name}</strong>
+            <div style="font-style:italic;color:#4b5563;margin-left:18px;">
+              ${item.nameVN || ""}
+            </div>
+          </div>
+          `;
+
+      const qtyHTML = `
+        <div style="font-weight:500; font-size:1rem; color:#111827;">x${item.qty}</div>
+      `;
+
+      div.innerHTML = `${infoHTML}${qtyHTML}`;
+      section.appendChild(div);
     });
 
-    cartTotal.textContent = "£" + total.toFixed(2);
-    cartCount.textContent = qty;
+    cartList.appendChild(section);
+  };
+
+  // --- Render Food ---
+  renderSection("🍱 Food Items", foodItems, false);
+
+  // --- Render Drinks grouped by category ---
+  if (drinkItems.length > 0) {
+    const drinksHeader = document.createElement("h3");
+    drinksHeader.textContent = "🍸 Drinks";
+    drinksHeader.style.cssText = "margin:14px 0 6px; font-weight:700; color:#2563eb;";
+    cartList.appendChild(drinksHeader);
+
+    for (const [category, items] of Object.entries(drinkGroups)) {
+      const categoryDiv = document.createElement("div");
+      categoryDiv.innerHTML = `<h4 style="margin:10px 0 4px 6px; font-weight:600; color:#1e3a8a;">${category}</h4>`;
+      cartList.appendChild(categoryDiv);
+      renderSection("", items, true);
+    }
+  }
+
+  cartCount.textContent = cartItems.reduce((sum, i) => sum + i.qty, 0);
 }
+
 
 /* ---------- Tab switches ---------- */
 function activate(tab) {
@@ -300,7 +438,6 @@ function activate(tab) {
 tabMenu.onclick = () => activate("menu");
 tabDrink.onclick = () => activate("drink");
 tabCart.onclick = () => activate("cart");
-
 
 btnClearSearch.onclick = () => {
     resetSearch();

@@ -170,31 +170,33 @@
             scrollbar-width: none;
         }
         
-        #btnDone {
-            background: #f1f5f9;
-            color: #374151;
-            border: 1px solid #d1d5db;
-            margin: 10px auto;
-            letter-spacing: .3px;
-            box-shadow: 0 4px 10px rgba(34, 197, 94, .25);
+        .btn-done {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background: #10b981;
+            color: white;
+            font-weight: 600;
+            border: none;
             border-radius: 6px;
-            padding: 8px 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .btn-done:hover {
+            background: #059669;
+        }
+        
+        #cartList h3 {
+            font-size: 1.1rem;
+            margin-top: 12px;
+            margin-bottom: 6px;
+        }
+        
+        #cartList h4 {
             font-size: 0.95rem;
-            flex-shrink: 0;
-            white-space: nowrap;
-            transition: 0.2s;
-        }
-        
-        #btnDone:hover {
-            color: #ef4444;
-            /* đỏ nhẹ khi hover */
-        }
-        
-        .btncenter {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
+            margin-left: 10px;
+            color: #1e3a8a;
         }
     </style>
 </head>
@@ -235,20 +237,9 @@
             </div>
 
             <!-- CART TAB -->
-            <div id="cartTab" style="display:none;">
+            <div id="cartTab" style="display:none;margin:10px">
                 <div id="cartList"></div>
-                <div class="border-t pt-3 mt-3">
-                    <div class="flex justify-between font-semibold mb-2" style="display:none;">
-                        <span>Total:</span> <span id="cartTotal">£0.00</span>
-                    </div>
-                    <div class="flex justify-center py-6 border-t mt-3">
-                        <div class="btncenter">
-                            <button id="btnDone" class="bg-green-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-green-700 transition">
-                Complete Order
-            </button>
-                        </div>
-                    </div>
-                </div>
+                <button id="btnDone" class="btn-done">Done</button>
             </div>
         </div>
     </div>
