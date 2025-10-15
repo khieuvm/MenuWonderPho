@@ -28,6 +28,8 @@ let cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
 let activeTab = "food"; // food | drink | cart
 let searchQuery = "";
 let cartNote = localStorage.getItem("cartNote") || "";
+let storedFoods = JSON.parse(localStorage.getItem("FoodMenu") || FoodMenu);
+let storedDrinks = JSON.parse(localStorage.getItem("DrinkMenu") || DrinkMenu);
 
 function clearData() {
     cartCount.textContent = 0;
@@ -143,12 +145,6 @@ function initMenuStorage() {
         localStorage.setItem("DrinkMenu", JSON.stringify(DrinkMenu));
         console.log("Default DrinkMenu saved to localStorage");
     }
-}
-
-function loadMenuData() {
-    const storedFoods = JSON.parse(localStorage.getItem("FoodMenu") || "[]");
-    const storedDrinks = JSON.parse(localStorage.getItem("DrinkMenu") || "[]");
-    return { storedFoods, storedDrinks };
 }
 
 /* ---------- Food LIST ---------- */
@@ -291,9 +287,10 @@ function renderCart() {
             align-items:center;
             background:${isDrink ? "#eff6ff" : "#fff"};
             border-radius:8px;
-            padding:10px 12px;
+            padding:5px;
+            padding-right: 0;
             box-shadow:0 1px 4px rgba(0,0,0,0.1);
-            margin:6px;
+            margin:5px;
             border-left:4px solid ${isDrink ? "#3b82f6" : "#10b981"};
         `;
 
@@ -323,7 +320,7 @@ function renderCart() {
             btnMinus.title = "Giảm số lượng";
             btnMinus.style.cssText = `
             background:none; border:none; cursor:pointer;
-            font-size:1.1rem; color:#dc2626; padding:2px 5px;
+            font-size:0.5rem; color:#dc2626; padding:2px;
         `;
             btnMinus.onclick = () => {
                 if (item.qty > 1) {
@@ -340,7 +337,7 @@ function renderCart() {
             btnPlus.title = "Tăng số lượng";
             btnPlus.style.cssText = `
             background:none; border:none; cursor:pointer;
-            font-size:1.1rem; color:#16a34a; padding:2px 5px;
+            font-size:0.5rem; color:#16a34a; padding:2px;
         `;
             btnPlus.onclick = () => {
                 item.qty++;
@@ -352,7 +349,7 @@ function renderCart() {
             btnDelete.title = "Xóa món này";
             btnDelete.style.cssText = `
             background:none; border:none; cursor:pointer;
-            font-size:1.2rem; margin-left:6px;
+            font-size:1.2rem; margin-left:5px;
         `;
             btnDelete.onclick = () => {
                 cartItems = cartItems.filter(i => i !== item);
@@ -363,13 +360,13 @@ function renderCart() {
             const qtyDiv = document.createElement("div");
             qtyDiv.textContent = `${item.qty}`;
             qtyDiv.style.cssText = `
-            font-weight:500; font-size:1rem; color:#111827; min-width:36px; text-align:center;
+            font-weight:500; font-size:1rem; color:#111827; min-width:15px; text-align:center;
         `;
 
             // ⚙️ Layout phần nút
             const controls = document.createElement("div");
             controls.style.cssText = `
-            display:flex; align-items:center; gap:4px;
+            display:flex; align-items:center;
         `;
             controls.append(btnMinus, qtyDiv, btnPlus, btnDelete);
 
@@ -533,37 +530,15 @@ function updateSelectedTotal() {
 
 let editingType = "";
 let editingData = [];
-let editingOptions = [];
-let currentItemIndex = -1;
 
 // mở popup chính
 function openUpdatePopup(type) {
-    console.log("type: ", type);
     editingType = type;
-    const key = type === "food" ? "FoodMenu" : "DrinkMenu";
+    const key = type === "Food" ? "FoodMenu" : "DrinkMenu";
     editingData = JSON.parse(localStorage.getItem(key) || "[]");
-    updateTitle.textContent = type === "food" ? "🍱 Update Food" : "🥤 Update Drink";
+    updateTitle.textContent = type === "Food" ? "🍱 Update Food" : "🥤 Update Drink";
     updatePopup.style.display = "flex";
     renderUpdateList(editingData);
-
-    // tìm kiếm realtime
-    searchItem.oninput = () => {
-        const q = searchItem.value.toLowerCase();
-        const filtered = editingData.filter(
-            (i) =>
-                i.name.toLowerCase().includes(q) ||
-                (i.nameVN && i.nameVN.toLowerCase().includes(q))
-        );
-        renderUpdateList(filtered);
-    };
-
-    cancelUpdate.onclick = () => (updatePopup.style.display = "none");
-
-    saveUpdate.onclick = () => {
-        localStorage.setItem(key, JSON.stringify(editingData));
-        alert(`✅ ${editingType} updated successfully!`);
-        updatePopup.style.display = "none";
-    };
 }
 
 function renderUpdateList(list) {
@@ -582,19 +557,18 @@ function renderUpdateList(list) {
         div.className = "update-item";
         div.style.cssText = "display:flex;justify-content:space-between;align-items:center;margin:2px;gap:5px";
 
-        if (editingType === "food") {
+        if (editingType === "Food") {
             div.innerHTML = `
         <input style="flex:1; font-size: 16px;" type="text" value="${item.index || ""}" data-field="index" placeholder="-">
-        <input style="flex:4; font-size: 16px;" type="text" value="${item.name}" data-field="name" placeholder="Name">
+        <input style="flex:4; font-size: 16px;" type="text" value="${item.name || ""}" data-field="name" placeholder="Name">
         <input style="flex:4; font-size: 16px;" type="text" value="${item.nameVN || ""}" data-field="nameVN" placeholder="Other Name">
         <input style="flex:1; font-size: 16px;" type="text"  value="${item.price || ""}" data-field="price" placeholder="Price">
         <button class="option-btn delete">🗑️</button>
       `;
         } else {
-            console.log("here1");
             div.innerHTML = `
         <input style="flex:2; font-size: 16px;" type="text" value="${item.category || ""}" data-field="category" placeholder="Category">
-        <input style="flex:5; font-size: 16px;" type="text" value="${item.name}" data-field="name" placeholder="Name">
+        <input style="flex:5; font-size: 16px;" type="text" value="${item.name || ""}" data-field="name" placeholder="Name">
         <input style="flex:2; font-size: 16px;" type="text" value="${item.nameVN || ""}" data-field="nameVN" placeholder="Other Name">
         <button class="option-btn delete">🗑️</button>
       `;
@@ -618,7 +592,7 @@ function renderUpdateList(list) {
 
         wrapper.appendChild(div);
         //--- Nếu là drink thì render options inline ---
-        if (editingType === "drink") {
+        if (editingType === "Drink") {
             const optDiv = document.createElement("div");
             optDiv.className = "option-inline";
 
@@ -628,8 +602,8 @@ function renderUpdateList(list) {
                 const optRow = document.createElement("div");
                 optRow.className = "option-item";
                 optRow.innerHTML = `
-          <input font-size: 16px;" type="text" value="${opt.label}" placeholder="Label">
-          <input  font-size: 16px;" type="text" value="${opt.price}" placeholder="Price">
+          <input font-size: 16px;" type="text" value="${opt.label || ""}" placeholder="Label">
+          <input  font-size: 16px;" type="text" value="${opt.price || ""}" placeholder="Price">
           <button class="option-btn delete" >🗑️</button>
         `;
                 const [label, price, del] = optRow.querySelectorAll("input,button");
@@ -658,7 +632,7 @@ function renderUpdateList(list) {
             wrapper.appendChild(optDiv);
         }
 
-        if (editingType === "drink")
+        if (editingType === "Drink")
             updateList.appendChild(wrapper);
         else
             updateList.appendChild(div);
@@ -728,16 +702,16 @@ menuDropdown.addEventListener("click", (e) => {
 
     switch (action) {
         case "updateFood":
-            openUpdatePopup("food");
+            openUpdatePopup("Food");
             break;
         case "updateDrink":
-            openUpdatePopup("drink");
+            openUpdatePopup("Drink");
             break;
         case "history":
             openHistoryPopup();
             break;
         case "about":
-            alert("ℹ️ This ordering system by Khieudeptrai 😎");
+            showToast("ℹ️ This ordering system by Khieudeptrai 😎");
             break;
     }
 });
@@ -808,7 +782,7 @@ clearHistory.addEventListener("click", () => {
 });
 
 addItem.onclick = () => {
-    if (editingType === "food") {
+    if (editingType === "Food") {
         editingData.push({
             index: "",
             name: "",
@@ -839,13 +813,131 @@ addItem.onclick = () => {
 
 };
 
+searchItem.oninput = () => {
+    const q = searchItem.value.toLowerCase();
+    const filtered = editingData.filter(
+        (i) =>
+            i.name.toLowerCase().includes(q) ||
+            (i.nameVN && i.nameVN.toLowerCase().includes(q))
+    );
+    renderUpdateList(filtered);
+};
+
+cancelUpdate.onclick = () => (updatePopup.style.display = "none");
+
+saveUpdate.onclick = () => {
+    // 🔹 Clear previous highlights
+    const wrappers = updateList.querySelectorAll(".update-item-wrapper");
+    wrappers.forEach((w) => (w.style.background = ""));
+
+    let warningMsg = "";
+    const invalidItems = [];
+
+    if (editingType === "Food") {
+        // 🍱 Validate food items
+        editingData.forEach((item) => {
+            const missingFields = [];
+            if (!item.name || item.name.trim() === "") missingFields.push("name");
+            if (!item.price || item.price <= 0) missingFields.push("price");
+            if (missingFields.length > 0) {
+                invalidItems.push({
+                    ...item,
+                    reason: `Missing ${missingFields.join(", ")}`,
+                });
+            }
+        });
+    } else if (editingType === "Drink") {
+        // ☕ Validate drink items
+        editingData.forEach((item) => {
+            const missingFields = [];
+            if (!item.name || item.name.trim() === "") missingFields.push("name");
+            if (!item.category || item.category.trim() === "")
+                missingFields.push("category");
+
+            if (missingFields.length > 0) {
+                invalidItems.push({
+                    ...item,
+                    reason: `Missing ${missingFields.join(", ")}`,
+                });
+            }
+
+            if (!item.options || item.options.length === 0) {
+                invalidItems.push({ ...item, reason: "No options defined" });
+            } else {
+                const badOpts = item.options.filter(
+                    (opt) =>
+                        !opt.label ||
+                        opt.label.trim() === "" ||
+                        !opt.price ||
+                        isNaN(opt.price) ||
+                        opt.price <= 0
+                );
+
+                if (badOpts.length > 0) {
+                    invalidItems.push({
+                        ...item,
+                        reason: `${badOpts.length} option(s) missing label or price`,
+                    });
+                }
+            }
+        });
+    }
+
+    // 🔹 Show warnings & highlight invalid items
+    if (invalidItems.length > 0) {
+        warningMsg =
+            "⚠️ Some items have missing or invalid data:\n\n" +
+            invalidItems
+                .map(
+                    (i, idx) =>
+                        `${idx + 1}. ${i.name || "(Unnamed)"} — ${i.reason}`
+                )
+                .join("\n");
+
+        // Highlight problematic rows
+        invalidItems.forEach((item, idx) => {
+            const wrappers = [...updateList.querySelectorAll(".update-item-wrapper")];
+
+            let target = null;
+
+            // tìm wrapper chứa input có value khớp với item.name
+            for (const w of wrappers) {
+                const nameInput = w.querySelector('input[data-field="name"]');
+                if (nameInput && nameInput.value === item.name) {
+                    target = w;
+                    break;
+                }
+            }
+            if (target) {
+                target.style.background = "#f89090ff";
+            }
+        });
+        // 🟡 Ask user if they still want to save
+        const confirmSave = confirm(
+            warningMsg + "\n\nYou should review and fix the highlighted items before saving.\nDo you still want to save these changes?"
+        );
+        if (!confirmSave) return;
+    }
+
+    showToast(`${editingType} updated successfully!`);
+    updatePopup.style.display = "none";
+    if (editingType === "Food") {
+        localStorage.setItem("FoodMenu", JSON.stringify(editingData));
+        storedFoods = editingData;
+        renderFood(storedFoods);
+    }
+    else {
+        localStorage.setItem("DrinkMenu", JSON.stringify(editingData));
+        storedDrinks = editingData;
+        renderDrinks(storedDrinks);
+    }
+}
+
 /* ---------- Search bindings ---------- */
 searchInput.oninput = filterActive;
 indexInput.oninput = filterActive;
 
-// gọi khi app khởi chạy
 initMenuStorage();
-const { storedFoods, storedDrinks } = loadMenuData();
 
 renderFood(storedFoods);
 renderDrinks(storedDrinks);
