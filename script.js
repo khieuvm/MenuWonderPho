@@ -737,7 +737,7 @@ menuDropdown.addEventListener("click", (e) => {
             openHistoryPopup();
             break;
         case "about":
-            alert("ℹ️ Sample ordering system by Khieu Vu 😎");
+            alert("ℹ️ This ordering system by Khieudeptrai 😎");
             break;
     }
 });
