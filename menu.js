@@ -1,4 +1,4 @@
-const menuItems = [
+const FoodMenu = [
     { index: 1, name: "Mixed Meat and Seafood Platter", nameVN: "Combo khai vị thập cẩm", price: 16.80 },
     { index: 2, name: "Vegetarian Platter", nameVN: "Combo khai vị chay", price: 14.80 },
     { index: 3, name: "Spring Rolls", nameVN: "Chả giò", price: 6.80 },
@@ -121,17 +121,16 @@ const menuItems = [
     { name: "Extra dishes - Egg Fried Rice", nameVN: "Cơm chiên trứng", price: 3.90 }
 ];
 
-
-const drinkItems = [
+const DrinkMenu = [
     // VIETNAMESE COFFEE
     {
-        category: "Vietnamese Coffee",
+        category: "Coffee",
         name: "Rich Vietnamese Hot Coffee",
         nameVN: "Cà phê nóng",
         options: [{ label: "Black", price: 3.50 }, { label: "With milk", price: 3.50 }]
     },
     {
-        category: "Vietnamese Coffee",
+        category: "Coffee",
         name: "Vietnamese Iced Coffee",
         nameVN: "Cà phê đá",
         options: [{ label: "Black", price: 3.50 }, { label: "With milk", price: 3.50 }]

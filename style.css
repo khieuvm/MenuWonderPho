@@ -1,0 +1,545 @@
+.tab-active {
+    background: #16a34a;
+    color: white;
+    border-bottom: 3px solid #15803d;
+}
+
+.tab-inactive {
+    background: #f1f5f9;
+    color: #4b5563;
+}
+
+.toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #16a34a;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    display: none;
+    z-index: 50;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    background: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.main-container {
+    width: 100%;
+    height: 100vh;
+    /* 🔹 chiếm toàn bộ chiều cao màn hình */
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    overflow: auto;
+}
+
+.content-area {
+    flex: 1;
+    height: 100%;
+    position: relative;
+    overflow: auto;
+}
+
+.safe-top {
+    padding-top: env(safe-area-inset-top);
+    padding-top: constant(safe-area-inset-top);
+}
+
+/* Header box và Search box tách riêng */
+
+.header-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    flex-wrap: nowrap;
+    overflow: visible !important;
+}
+
+/* Buttons */
+
+.header-btn {
+    background: #f1f5f9;
+    color: #374151;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 4px 6px;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+
+.header-btn:hover {
+    background: #e2e8f0;
+}
+
+/* --- Search Box Layout --- */
+/* --- SEARCH AREA --- */
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: calc(100% - 20px);
+    margin: 10px;
+    flex-wrap: nowrap;
+    overflow-x: none;
+    /* center horizontally */
+}
+
+.index-input {
+    flex: 2;
+    min-width: 60px;
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 1rem;
+    flex-shrink: 1;
+}
+
+.search-input {
+    flex: 8;
+    min-width: 150px;
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+    flex-shrink: 1;
+}
+
+.clear-btn {
+    flex: 1;
+    min-width: 45px;
+    text-align: center;
+    padding: 8px 0;
+    border: none;
+    border-radius: 6px;
+    background: #f3f4f6;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+    flex-shrink: 0;
+    /* luôn giữ nút ổn định */
+}
+
+.clear-btn:hover {
+    background: #e2e8f0;
+}
+
+#indexInput,
+#searchInput {
+    transition: all 0.25s ease;
+}
+
+.push {
+    margin-left: auto;
+}
+
+.header-box::-webkit-scrollbar,
+.search-box::-webkit-scrollbar {
+    display: none;
+}
+
+.header-box,
+.search-box {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.btn-done {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background: #10b981;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-done:hover {
+    background: #059669;
+}
+
+#cartList h3 {
+    font-size: 1.1rem;
+    margin-top: 12px;
+    margin-bottom: 6px;
+}
+
+#cartList h4 {
+    font-size: 0.95rem;
+    margin-left: 10px;
+    color: #1e3a8a;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #374151;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.menu-btn:hover {
+    background: #f3f4f6;
+}
+
+.menu-dropdown {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: auto;
+    top: 100%;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    z-index: 9999;
+    min-width: 180px;
+    animation: fadeIn 0.15s ease-out;
+}
+
+.menu-item {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 8px 14px;
+    font-size: 0.95rem;
+    color: #374151;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.menu-item:hover {
+    background: #f3f4f6;
+}
+
+/* animation nhỏ khi hiện */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.menu-wrapper {
+    position: relative;
+}
+
+/* Popup Wrapper */
+#historyPopup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Box chính */
+.history-container {
+    background: #fff;
+    border-radius: 10px;
+    padding: 16px;
+    width: 90%;
+    max-width: 450px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Header */
+.history-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.history-header h3 {
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Content - cho phép scroll */
+.history-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+    position: relative;
+}
+
+.history-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.history-content::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 4px;
+}
+
+/* Footer */
+.history-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 8px;
+}
+
+/* Buttons */
+.history-btn {
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #fff;
+    transition: opacity 0.2s;
+    padding: 5px 10px;
+}
+
+.history-btn:hover {
+    opacity: 0.85;
+}
+
+.history-btn.gray {
+    background: #9ca3af;
+}
+
+.history-btn.danger {
+    background: #dc2626;
+}
+
+.history-btn.small {
+    flex: 0 0 auto;
+    min-width: 70px;
+}
+
+/* Back button */
+.back-btn {
+    font-size: 0.9rem;
+    color: #2563eb;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.back-btn:hover {
+    opacity: 0.7;
+}
+
+.item-check {
+    transform: scale(1.2);
+    cursor: pointer;
+    accent-color: #2563eb;
+    /* màu xanh đẹp cho checkbox */
+}
+
+/* ===== MAIN UPDATE POPUP ===== */
+#updatePopup,
+#optionPopup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.update-container,
+.option-container {
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.update-search {
+    flex : 8;
+    padding: 6px 10px;
+    font-size: 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.update-list {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 2px;
+}
+
+.update-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    align-items: center;
+    gap: 5px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.update-item-wrapper {
+    background: #f9fafb;
+    border-radius: 8px;
+    padding: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.update-item input {
+    width: 100%;
+    padding: 4px 6px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.update-footer {
+  display: flex;
+  justify-content: center;   /* 👈 canh giữa toàn bộ hàng */
+  align-items: center;
+  gap: 20px;                 /* 👈 khoảng cách giữa 2 nút */
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.update-btn {
+    flex: 1;
+    max-width: 80px;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.update-btn.save {
+    background: #4cae70;
+}
+
+.update-btn.cancel {
+    background: #9b9b9d;
+}
+
+/* ===== OPTIONS POPUP ===== */
+.option-inline {
+    margin: 6px 0 10px 20px;
+    border-left: 3px solid #dbeafe;
+    padding-left: 8px;
+}
+
+.option-inline .option-item {
+    display: grid;
+    grid-template-columns: minmax(40px, 100px) minmax(20px, 60px) 28px;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.option-inline .option-item input {
+    padding: 4px 6px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    min-width: 0;
+}
+
+.option-inline .option-item button {
+    width: 24px;
+    height: 24px;
+    font-size: 0.7rem;
+    border-radius: 4px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.option-inline .add-option {
+    background: #a5bcee;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.update-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.btnAddItem {
+    flex : 2;
+    padding: 6px 10px;
+    font-size: 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.option-btn.delete {
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
