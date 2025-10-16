@@ -28,8 +28,8 @@ let cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
 let activeTab = "food"; // food | drink | cart
 let searchQuery = "";
 let cartNote = localStorage.getItem("cartNote") || "";
-let storedFoods = JSON.parse(localStorage.getItem("FoodMenu") || FoodMenu);
-let storedDrinks = JSON.parse(localStorage.getItem("DrinkMenu") || DrinkMenu);
+let storedFoods = FoodMenu;
+let storedDrinks = DrinkMenu;
 
 function clearData() {
     cartCount.textContent = 0;
@@ -145,6 +145,9 @@ function initMenuStorage() {
         localStorage.setItem("DrinkMenu", JSON.stringify(DrinkMenu));
         console.log("Default DrinkMenu saved to localStorage");
     }
+
+    storedFoods = JSON.parse(localStorage.getItem("FoodMenu"));
+    storedDrinks = JSON.parse(localStorage.getItem("DrinkMenu"));
 }
 
 /* ---------- Food LIST ---------- */
@@ -562,7 +565,7 @@ function renderUpdateList(list) {
         <input style="flex:1; font-size: 16px;" type="text" value="${item.index || ""}" data-field="index" placeholder="-">
         <input style="flex:4; font-size: 16px;" type="text" value="${item.name || ""}" data-field="name" placeholder="Name">
         <input style="flex:4; font-size: 16px;" type="text" value="${item.nameVN || ""}" data-field="nameVN" placeholder="Other Name">
-        <input style="flex:1; font-size: 16px;" type="text"  value="${item.price || ""}" data-field="price" placeholder="Price">
+        <input style="min-width:40px; flex:1; font-size: 16px;" type="text"  value="${item.price || ""}" data-field="price" placeholder="Price">
         <button class="option-btn delete">🗑️</button>
       `;
         } else {
@@ -602,8 +605,8 @@ function renderUpdateList(list) {
                 const optRow = document.createElement("div");
                 optRow.className = "option-item";
                 optRow.innerHTML = `
-          <input font-size: 16px;" type="text" value="${opt.label || ""}" placeholder="Label">
-          <input  font-size: 16px;" type="text" value="${opt.price || ""}" placeholder="Price">
+          <input style="font-size: 16px;" type="text" value="${opt.label || ""}" placeholder="Label">
+          <input style="min-width:40px; font-size: 16px;" type="text" value="${opt.price || ""}" placeholder="Price">
           <button class="option-btn delete" >🗑️</button>
         `;
                 const [label, price, del] = optRow.querySelectorAll("input,button");
@@ -621,7 +624,7 @@ function renderUpdateList(list) {
             // add new option
             const addOptBtn = document.createElement("button");
             addOptBtn.className = "add-option";
-            addOptBtn.textContent = "➕ Add Option";
+            addOptBtn.textContent = "Add Option";
             addOptBtn.onclick = () => {
                 if (!editingData[idx].options) editingData[idx].options = [];
                 editingData[idx].options.push({ label: "", price: 0 });
