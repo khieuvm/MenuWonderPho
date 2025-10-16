@@ -548,12 +548,14 @@ body {
 .note-container {
     background: #fff;
     border-radius: var(--radius-lg);
-    padding: 14px;
+    padding: 10px;
     width: calc(100% - 40px);
     max-width: 480px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
+    position: absolute;
+    top: 10%;
     gap: 10px;
 }
 
@@ -563,7 +565,7 @@ body {
 }
 
 #noteInput {
-    width: 100%;
+    width: calc(100% - 18px);
     border: 1px solid var(--gray-300);
     border-radius: var(--radius-md);
     padding: 8px;
