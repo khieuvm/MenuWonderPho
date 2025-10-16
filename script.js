@@ -540,6 +540,7 @@ function openUpdatePopup(type) {
     const key = type === "Food" ? "FoodMenu" : "DrinkMenu";
     editingData = JSON.parse(localStorage.getItem(key) || "[]");
     updateTitle.textContent = type === "Food" ? "🍱 Update Food" : "🥤 Update Drink";
+    searchItem.value = "";
     updatePopup.style.display = "flex";
     renderUpdateList(editingData);
 }
@@ -562,8 +563,8 @@ function renderUpdateList(list) {
 
         if (editingType === "Food") {
             div.innerHTML = `
-        <input style="flex:1; font-size: 16px;" type="text" value="${item.index || ""}" data-field="index" placeholder="-">
-        <input style="flex:4; font-size: 16px;" type="text" value="${item.name || ""}" data-field="name" placeholder="Name">
+        <input style="min-width:27px; text-align:center; flex:1; font-size: 16px;" type="text" value="${item.index || ""}" data-field="index" placeholder="-">
+        <input style="flex:5; font-size: 16px;" type="text" value="${item.name || ""}" data-field="name" placeholder="Name">
         <input style="flex:4; font-size: 16px;" type="text" value="${item.nameVN || ""}" data-field="nameVN" placeholder="Other Name">
         <input style="min-width:40px; flex:1; font-size: 16px;" type="text"  value="${item.price || ""}" data-field="price" placeholder="Price">
         <button class="option-btn delete">🗑️</button>
@@ -821,7 +822,8 @@ searchItem.oninput = () => {
     const filtered = editingData.filter(
         (i) =>
             i.name.toLowerCase().includes(q) ||
-            (i.nameVN && i.nameVN.toLowerCase().includes(q))
+            (i.nameVN && i.nameVN.toLowerCase().includes(q)) ||
+            (i.category && i.category.toLowerCase().includes(q))
     );
     renderUpdateList(filtered);
 };
