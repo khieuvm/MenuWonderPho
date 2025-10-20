@@ -601,3 +601,9 @@ body {
 .note-btn:hover {
     opacity: 0.85;
 }
+
+#foodList, #drinkList {
+  overflow-y: auto;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  transition: padding-bottom 0.3s ease;
+}
