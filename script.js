@@ -965,6 +965,12 @@ saveUpdate.onclick = () => {
     }
 }
 
+window.visualViewport?.addEventListener('resize', () => {
+  const vhDiff = window.innerHeight - window.visualViewport.height;
+  document.getElementById('content-area').style.paddingBottom = vhDiff + 'px';
+});
+
+
 /* ---------- Search bindings ---------- */
 searchInput.oninput = filterActive;
 indexInput.oninput = filterActive;
