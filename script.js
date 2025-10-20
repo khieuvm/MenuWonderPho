@@ -67,6 +67,20 @@ function resetSearch() {
     searchQuery = "";
 }
 
+function renderActiveTab(newList = null) {
+    switch (activeTab) {
+        case "food":
+            renderFood(newList ?? storedFoods);
+            break;
+        case "drink":
+            renderDrinks(newList ?? storedDrinks);
+            break;
+        case "cart":
+            renderCart();
+            break;
+    }
+}
+
 function filterActive() {
     const q = searchInput.value.trim().toLowerCase();
     searchQuery = q;
@@ -86,13 +100,21 @@ function filterActive() {
         const initialsVN = vn ? vn.split(/\s+/).map(w => w[0]).join("").toLowerCase() : "";
         const initialsCat = category ? category.split(/\s+/).map(w => w[0]).join("").toLowerCase() : "";
 
+        // tách từng từ trong query để kiểm tra từng phần
+        const qWords = q.split(/\s+/).filter(Boolean);
+
+        // Kiểm tra xem tất cả từ trong q có xuất hiện trong bất kỳ field nào không
+        const allWordsMatch = qWords.every(word =>
+            nameLower.includes(word) ||
+            vnLower.includes(word) ||
+            catLower.includes(word)
+        );
+
         return (
-            nameLower.includes(q) ||
-            vnLower.includes(q) ||
-            catLower.includes(q) ||
-            initials.startsWith(q) ||
-            initialsVN.startsWith(q) ||
-            initialsCat.startsWith(q)
+            allWordsMatch ||
+            initials.includes(q) ||
+            initialsVN.includes(q) ||
+            initialsCat.includes(q)
         );
     }
 
@@ -101,10 +123,7 @@ function filterActive() {
     else if (q)
         filtered = filtered.filter(x => matchInitials(x.name, x.nameVN, x.category));
 
-    if (activeTab === "drink")
-        renderDrinks(filtered);
-    else
-        renderFood(filtered);
+    renderActiveTab(filtered);
 }
 
 function addToCart(item) {
@@ -149,6 +168,14 @@ function initMenuStorage() {
     storedFoods = JSON.parse(localStorage.getItem("FoodMenu"));
     storedDrinks = JSON.parse(localStorage.getItem("DrinkMenu"));
 }
+
+function ResetData() {
+    localStorage.removeItem("FoodMenu");
+    localStorage.removeItem("DrinkMenu");
+    initMenuStorage();
+    renderActiveTab();
+}
+
 
 /* ---------- Food LIST ---------- */
 function renderFood(items) {
@@ -714,6 +741,9 @@ menuDropdown.addEventListener("click", (e) => {
         case "history":
             openHistoryPopup();
             break;
+        case "reset":
+            ResetData();
+            break;
         case "about":
             showToast("ℹ️ This ordering system by Khieudeptrai 😎");
             break;
@@ -746,10 +776,7 @@ btnDone.onclick = () => {
 
 btnClearSearch.onclick = () => {
     resetSearch();
-
-    // Reset list
-    if (activeTab === "food") renderFood(storedFoods);
-    else if (activeTab === "drink") renderDrinks(storedDrinks);
+    renderActiveTab();
 };
 
 // Sự kiện mở popup
