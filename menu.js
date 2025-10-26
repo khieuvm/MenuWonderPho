@@ -2,48 +2,68 @@ const FoodMenu = [{
     index: 1,
     name: "Mixed Meat and Seafood Platter",
     nameVN: "Combo khai vị thập cẩm",
-    price: 16.80
+    price: 19.80
 }, {
     index: 2,
     name: "Vegetarian Platter",
     nameVN: "Combo khai vị chay",
-    price: 14.80
+    price: 17.80
 }, {
     index: 3,
     name: "Spring Rolls",
-    nameVN: "Chả giò",
-    price: 6.80
+    nameVN: "Chả nem (chả giò)",
+    price: 7.95
 }, {
     index: 4,
     name: "Vegetable Spring Rolls",
-    nameVN: "Chả giò chay",
-    price: 6.50
+    nameVN: "Chả nem (chả giò) chay",
+    price: 7.50
 }, {
     index: 5,
     name: "Prawn Summer Rolls",
     nameVN: "Gỏi cuốn tôm",
-    price: 6.50
+    price: 7.80
 }, {
     index: 6,
     name: "Beef Summer Rolls",
     nameVN: "Gỏi cuốn bò",
-    price: 6.80
+    price: 7.80
 }, {
     index: 7,
     name: "Tofu Summer Rolls",
     nameVN: "Gỏi cuốn đậu phụ",
-    price: 6.50
+    price: 7.50
 }, {
     index: 8,
-    name: "Chicken Wings with Anchovy Sauce",
+    name: "Anchovy Chicken Wings",
     nameVN: "Cánh gà chiên nước mắm",
-    price: 8.50
+    price: 9.50
 }, {
     index: 9,
+    name: "Salt & Pepper Chicken Wings",
+    nameVN: "Cánh gà rang muối tiêu",
+    price: 9.50
+}, {
+    index: 10,
     name: "Crispy Prawns in Batter",
     nameVN: "Tôm tẩm bột chiên giòn",
-    price: 6.50
+    price: 7.20
 }, {
+    index: 11,
+    name: "Salt & Pepper Prawns",
+    nameVN: "Tôm rang muối tiêu",
+    price: 10.50
+}, {
+    index: 12,
+    name: "Salt & Pepper Squid",
+    nameVN: "Mực rang muối tiêu",
+    price: 10.50
+},
+
+
+
+
+{
     index: 10,
     name: "Crispy Fried Sweet Corn",
     nameVN: "Ngô chiên giòn",
@@ -68,12 +88,7 @@ const FoodMenu = [{
     name: "Salt & Pepper Squid",
     nameVN: "Mực rang muối tiêu",
     price: 9.50
-}, {
-    index: 15,
-    name: "Salt & Pepper Prawns",
-    nameVN: "Tôm rang muối tiêu",
-    price: 9.50
-}, {
+},  {
     index: 16,
     name: "Salt & Pepper Chicken Wings",
     nameVN: "Cánh gà rang muối tiêu",
