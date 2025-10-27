@@ -483,6 +483,447 @@ const FoodMenu = [{
     name: "Grilled Beef and Pork Wrapped in Betel Leaves Vermicelli",
     nameVN: "Bún chả lá lốt",
     price: 13.80
+},
+{
+    index: 85,
+    name: "Grilled Pork Marinated with Lemongrass",
+    nameVN: "Cơm thịt nướng",
+    price: 12.80
+},
+{
+    index: 86,
+    name: "Grilled Chicken Marinated with Lemongrass",
+    nameVN: "Cơm gà nướng",
+    price: 12.80
+},
+{
+    index: 87,
+    name: "Grilled Pork Chop with Lemongrass, Shredded Pork Skin and Fried Egg",
+    nameVN: "Cơm sườn bì chả",
+    price: 14.80
+},
+{
+    index: 88,
+    name: "Vietnamese Braised Pork Belly with Egg",
+    nameVN: "Cơm thịt kho tàu",
+    price: 14.50
+},
+{
+    index: 89,
+    name: "Vietnamese Stewed Beef Rice",
+    nameVN: "Cơm bò kho",
+    price: 13.80
+},
+{
+    index: 90,
+    name: "Chicken Fried Rice",
+    nameVN: "Cơm chiên (rang) gà",
+    price: 12.50
+},
+{
+    index: 91,
+    name: "Beef Fried Rice",
+    nameVN: "Cơm chiên (rang) bò",
+    price: 12.80
+},
+{
+    index: 92,
+    name: "King Prawn Fried Rice",
+    nameVN: "Cơm chiên (rang) tôm",
+    price: 13.80
+},
+{
+    index: 93,
+    name: "Mixed Seafood Fried Rice (King prawn, squid and mussels)",
+    nameVN: "Cơm chiên (rang) hải sản (tôm, mực, vẹm)",
+    price: 13.80
+},
+{
+    index: 94,
+    name: "Mixed Meat Fried Rice (King prawn, chicken and beef)",
+    nameVN: "Cơm chiên (rang) đặc biệt (tôm, gà, bò)",
+    price: 13.80
+},
+{
+    index: 95,
+    name: "Tofu & Mixed Vegetables Fried Rice",
+    nameVN: "Cơm chiên chay",
+    price: 12.50
+},
+{
+    index: 96,
+    name: "Beef Fried Egg Noodles",
+    nameVN: "Mì xào thịt bò",
+    price: 12.80
+},
+{
+    index: 97,
+    name: "Chicken Fried Egg Noodles",
+    nameVN: "Mì xào thịt gà",
+    price: 13.50
+},
+{
+    index: 98,
+    name: "King Prawn Fried Egg Noodles",
+    nameVN: "Mì xào tôm",
+    price: 13.80
+},
+{
+    index: 99,
+    name: "Mixed Seafood Fried Egg Noodles",
+    nameVN: "Mì xào hải sản (tôm, mực, vẹm)",
+    price: 13.80
+},
+{
+    index: 100,
+    name: "Special Fried Egg Noodles",
+    nameVN: "Mì xào thập cẩm (tôm, gà, bò)",
+    price: 13.80
+},
+{
+    index: 101,
+    name: "Tofu & Mixed Vegetables Fried Egg Noodles",
+    nameVN: "Mì xào chay",
+    price: 12.50
+},
+{
+    index: 102,
+    name: "Bean Sprouts & Onions Fried Egg Noodles",
+    nameVN: "Mì xào giá hành",
+    price: 12.50
+},
+{
+    index: 103,
+    name: "Beef Fried Flat Rice Noodles",
+    nameVN: "Phở xào bò",
+    price: 12.80
+},
+{
+    index: 104,
+    name: "Chicken Fried Flat Rice Noodles",
+    nameVN: "Phở xào gà",
+    price: 12.50
+},
+{
+    index: 105,
+    name: "King Prawn Fried Flat Rice Noodles",
+    nameVN: "Phở xào tôm",
+    price: 13.80
+},
+{
+    index: 106,
+    name: "Mixed Seafood Fried Flat Rice Noodles",
+    nameVN: "Phở xào hải sản (tôm, mực, vẹm)",
+    price: 13.80
+},
+{
+    index: 107,
+    name: "Special Fried Flat Rice Noodles",
+    nameVN: "Phở xào thập cẩm (tôm, gà, bò)",
+    price: 13.80
+},
+{
+    index: 108,
+    name: "Tofu & Mixed Vegetables Fried Flat Rice Noodles",
+    nameVN: "Phở xào chay",
+    price: 12.50
+},
+{
+    index: 109,
+    name: "Bean Sprouts & Onions Fried Flat Rice Noodles",
+    nameVN: "Phở xào giá",
+    price: 9.80
+},
+{
+    index: 110,
+    name: "Beef Fried Udon",
+    nameVN: "Mì udon xào bò",
+    price: 12.80
+},
+{
+    index: 111,
+    name: "Chicken Fried Udon",
+    nameVN: "Mì udon xào gà",
+    price: 12.50
+},
+{
+    index: 112,
+    name: "King Prawn Fried Udon",
+    nameVN: "Mì udon xào tôm",
+    price: 13.80
+},
+{
+    index: 113,
+    name: "Mixed Seafood Fried Udon",
+    nameVN: "Mì udon xào hải sản",
+    price: 13.80
+},
+{
+    index: 114,
+    name: "Special Fried Udon",
+    nameVN: "Mì udon xào thập cẩm",
+    price: 13.80
+},
+{
+    index: 115,
+    name: "Tofu & Mixed Vegetables Fried Udon",
+    nameVN: "Mì udon xào chay",
+    price: 12.50
+},
+{
+    index: 116,
+    name: "Bean Sprouts & Onions Fried Udon",
+    nameVN: "Mì udon xào giá",
+    price: 9.80
+},
+{
+    index: 117,
+    name: "Caramelised Mekong Catfish in Clay Pot",
+    nameVN: "Cá kho tộ",
+    price: 13.80
+},
+{
+    index: 118,
+    name: "Shaking Beef",
+    nameVN: "Bò lúc lắc",
+    price: 14.80
+},
+{
+    index: 119,
+    name: "Campfire Beef",
+    nameVN: "Bò lửa hồng",
+    price: 13.80
+},
+{
+    index: 120,
+    name: "Vietnamese Stir Fried Squid with Onion, Tomatoes and Chillies Paste",
+    nameVN: "Mực xào sả ớt",
+    price: 13.80
+},
+{
+    index: 121,
+    name: "Stir Fried Chicken with Lemongrass and Chillies",
+    nameVN: "Gà xào sả ớt",
+    price: 12.80
+},
+{
+    index: 122,
+    name: "Stir Fried Chicken with Thai Basil Leaves",
+    nameVN: "Gà xào rau húng",
+    price: 12.80
+},
+{
+    index: 123,
+    name: "Deep-Fried Crispy Seabass Fillet",
+    nameVN: "Cá chiên mắm xoài",
+    price: 16.80
+},
+{
+    index: 124,
+    name: "Stewed Tofu with Mushroom",
+    nameVN: "Đậu phụ kho",
+    price: 11.80
+},
+{
+    index: 125,
+    name: "Stir Fried Aubergine with Tofu and Chillies Paste",
+    nameVN: "Cà tím đậu phụ xào cay",
+    price: 11.80
+},
+{
+    index: 126,
+    name: "Vietnamese Steamed Rice Rolls",
+    nameVN: "Bánh cuốn",
+    price: 10.50
+},
+{
+    index: 127,
+    name: "Vegetarian Vietnamese Steamed Rice Rolls",
+    nameVN: "Bánh cuốn chay",
+    price: 10.50
+},
+{
+    index: 128,
+    name: "Vietnamese Fried Fish Fillets with Turmeric and Dill",
+    nameVN: "Chả cá Lã Vọng",
+    price: 14.80
+},
+{
+    index: 129,
+    name: "Fried Pork with Galangal",
+    nameVN: "Thịt lợn (heo) rang riềng",
+    price: 15.80
+},
+{
+    index: 130,
+    name: "Braised Pork Leg with Mooli",
+    nameVN: "Chân giò hầm củ cải",
+    price: 14.80
+},
+{
+    index: 131,
+    name: "Fried Prawns with Tamarind Sauce",
+    nameVN: "Tôm rang me",
+    price: 16.80
+},
+{
+    index: 132,
+    name: "Vietnamese Hot and Sour Seabass Soup",
+    nameVN: "Canh chua cá",
+    price: 15.80
+},
+{
+    index: 133,
+    name: "Vietnamese Stir Fried Pork Belly with Bamboo Shoots",
+    nameVN: "Ba chỉ xào măng",
+    price: 14.80
+},
+{
+    index: 134,
+    name: "Sliced Pork and Pak Choy Soup",
+    nameVN: "Canh cải thịt băm",
+    price: 14.80
+},
+{
+    index: 135,
+    name: "Beef Curry",
+    nameVN: "Cà ri bò",
+    price: 13.80
+},
+{
+    index: 136,
+    name: "Chicken Curry",
+    nameVN: "Cà ri gà",
+    price: 12.80
+},
+{
+    index: 137,
+    name: "Lamb Curry",
+    nameVN: "Cà ri cừu",
+    price: 14.80
+},
+{
+    index: 138,
+    name: "Tofu & Mixed Vegetable Curry",
+    nameVN: "Cà ri chay",
+    price: 12.80
+},
+{
+    index: 139,
+    name: "Slow Cooked Brisket Beef Pho (Kid’s Corner)",
+    nameVN: "Phở bò chín (Trẻ em)",
+    price: 7.95
+},
+{
+    index: 140,
+    name: "Pulled Chicken Pho (Kid’s Corner)",
+    nameVN: "Phở gà (Trẻ em)",
+    price: 7.95
+},
+{
+    index: 141,
+    name: "Chicken Fried Rice (Kid’s Corner)",
+    nameVN: "Cơm chiên (rang) gà (Trẻ em)",
+    price: 7.95
+},
+{
+    index: 142,
+    name: "Deep Fried Chicken Wings & Chips (Kid’s Corner)",
+    nameVN: "Gà chiên và khoai tây chiên (Trẻ em)",
+    price: 7.95
+},
+// Extra Toppings
+{
+    name: "Flat Rice Noodle (Ho Fun)",
+    nameVN: "Phở",
+    price: 2.95
+},
+{
+    name: "Vermicelli (Thick or Thin)",
+    nameVN: "Bún (sợi to hoặc nhỏ)",
+    price: 2.95
+},
+{
+    name: "Rare Beef",
+    nameVN: "Thịt bò tái",
+    price: 3.95
+},
+{
+    name: "Well Done Beef",
+    nameVN: "Thịt bò chín",
+    price: 3.95
+},
+{
+    name: "Chicken",
+    nameVN: "Thịt gà",
+    price: 2.95
+},
+{
+    name: "King Prawn (4)",
+    nameVN: "Tôm",
+    price: 3.95
+},
+{
+    name: "Squid",
+    nameVN: "Mực",
+    price: 2.95
+},
+{
+    name: "Mussel (2)",
+    nameVN: "Vẹm xanh",
+    price: 2.95
+},
+{
+    name: "Pork Sausages",
+    nameVN: "Giò lụa",
+    price: 2.95
+},
+{
+    name: "Pig Trotters (2)",
+    nameVN: "Giò heo",
+    price: 2.95
+},
+{
+    name: "Tofu",
+    nameVN: "Đậu phụ",
+    price: 2.95
+},
+{
+    name: "Fried Egg",
+    nameVN: "Trứng chiên",
+    price: 1.95
+},
+{
+    name: "Vegetables",
+    nameVN: "Rau",
+    price: 1.95
+},
+{
+    name: "Beansprout, Chillies & Herbs (served with Pho)",
+    nameVN: "Rau ăn kèm món phở (giá, ớt, rau thơm)",
+    price: 12
+},
+
+// Extra Dishes
+{
+    name: "Jasmine Rice",
+    nameVN: "Cơm trắng",
+    price: 3.20
+},
+{
+    name: "Egg Fried Rice",
+    nameVN: "Cơm rang trứng",
+    price: 4.50
+},
+{
+    name: "Beef Broth with Onions",
+    nameVN: "Nước dùng bò với hành",
+    price: 2.75
+},
+{
+    name: "Beef Broth with Onions and a Poached Egg",
+    nameVN: "Nước dùng bò với hành và trứng chần",
+    price: 3.50
 }
 ];
 
